@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "ES6"
+  },
+  "extends": "expo/tsconfig.base"
+}
