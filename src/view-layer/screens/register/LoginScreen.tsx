@@ -1,43 +1,51 @@
 import { View, StyleSheet } from "react-native";
 import { Button, TextInput, useTheme } from "react-native-paper";
+import { Appbar } from "../../shared/components/Appbar";
 
 export function LoginScreen() {
   const theme = useTheme();
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Nome de Usuário"
-        dense
-        style={styles.usernameInput}
-        right={<TextInput.Icon icon="check" iconColor={theme.colors.primary} />}
-      />
-      <TextInput
-        placeholder="Senha"
-        dense
-        style={styles.passwordInput}
-        right={<TextInput.Icon icon="check" iconColor={theme.colors.primary} />}
-      />
-      <View style={styles.buttonContainer}>
-        <Button mode="contained">Entrar</Button>
-        <Button
-          mode="contained"
-          style={styles.facebookButton}
-          textColor={styles.facebookButton.color}
-          icon={"facebook"}
-        >
-          Entrar com Facebook
-        </Button>
-        <Button
-          mode="contained"
-          style={styles.googleButton}
-          textColor={styles.googleButton.color}
-          icon={"google-plus"}
-        >
-          Entrar com Google
-        </Button>
+    <>
+      <Appbar title="Login" />
+      <View style={styles.container}>
+        <TextInput
+          placeholder="Nome de Usuário"
+          dense
+          style={styles.usernameInput}
+          right={
+            <TextInput.Icon icon="check" iconColor={theme.colors.primary} />
+          }
+        />
+        <TextInput
+          placeholder="Senha"
+          dense
+          style={styles.passwordInput}
+          right={
+            <TextInput.Icon icon="check" iconColor={theme.colors.primary} />
+          }
+        />
+        <View style={styles.buttonContainer}>
+          <Button mode="contained">Entrar</Button>
+          <Button
+            mode="contained"
+            style={styles.facebookButton}
+            textColor={styles.facebookButton.color}
+            icon={"facebook"}
+          >
+            Entrar com Facebook
+          </Button>
+          <Button
+            mode="contained"
+            style={styles.googleButton}
+            textColor={styles.googleButton.color}
+            icon={"google-plus"}
+          >
+            Entrar com Google
+          </Button>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
