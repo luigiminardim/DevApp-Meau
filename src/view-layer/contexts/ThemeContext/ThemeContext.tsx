@@ -2,10 +2,10 @@ import { PropsWithChildren } from "react";
 import {
   Provider as PaperProvider,
   MD2LightTheme,
-  MD2Theme,
   configureFonts,
 } from "react-native-paper";
 import { useFontsLoaded } from "./useFontsLoaded";
+import { View } from "react-native";
 
 /** Use Material Design 2 font configuration
  *  @see https://callstack.github.io/react-native-paper/docs/guides/fonts/
@@ -55,12 +55,20 @@ const md2FontConfig = {
   },
 } as const;
 
-const theme: MD2Theme = {
+/** @see https://callstack.github.io/react-native-paper/docs/guides/theming#theme-properties */
+const theme = {
   ...MD2LightTheme,
   fonts: configureFonts({ config: md2FontConfig, isV3: false }),
   colors: {
     ...MD2LightTheme.colors,
     primary: "#88c9bf",
+    onPrimary: "#434343",
+    primaryContainer: "#cfe9e5",
+    onPrimaryContainer: "#434343",
+    secondary: "#ffd358",
+    onSecondary: "#434343",
+    background: "#fafafa",
+    onBackground: "#757575",
   },
 };
 
@@ -69,5 +77,12 @@ export function ThemeProvider({ children }: PropsWithChildren) {
   if (!fontsLoaded) {
     return null;
   }
-  return <PaperProvider theme={theme}>{children}</PaperProvider>;
+  return (
+    <PaperProvider theme={theme}>
+      {/* eslint-disable-next-line react-native/no-inline-styles */}
+      <View style={{ flexGrow: 1, backgroundColor: theme.colors.background }}>
+        {children}
+      </View>
+    </PaperProvider>
+  );
 }
