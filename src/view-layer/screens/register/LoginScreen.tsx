@@ -26,7 +26,9 @@ export function LoginScreen() {
           }
         />
         <View style={styles.buttonContainer}>
-          <Button mode="contained">Entrar</Button>
+          <Button mode="contained" textColor={theme.colors.onPrimary}>
+            Entrar
+          </Button>
           <Button
             mode="contained"
             style={styles.facebookButton}
