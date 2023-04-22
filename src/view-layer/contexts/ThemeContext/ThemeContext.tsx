@@ -5,6 +5,7 @@ import {
   MD2Theme,
   configureFonts,
 } from "react-native-paper";
+import { useFontsLoaded } from "./useFontsLoaded";
 
 /** Use Material Design 2 font configuration
  *  @see https://callstack.github.io/react-native-paper/docs/guides/fonts/
@@ -12,56 +13,44 @@ import {
 const md2FontConfig = {
   web: {
     regular: {
-      fontFamily: "Roboto",
-      fontWeight: "400",
+      fontFamily: "Roboto-Regular",
     },
     medium: {
-      fontFamily: "Roboto",
-      fontWeight: "500",
+      fontFamily: "Roboto-Medium",
     },
     light: {
-      fontFamily: "Roboto",
-      fontWeight: "300",
+      fontFamily: "Roboto-Light",
     },
     thin: {
-      fontFamily: "Roboto",
-      fontWeight: "200",
+      fontFamily: "Roboto-Light",
     },
   },
   ios: {
     regular: {
-      fontFamily: "Roboto",
-      fontWeight: "400",
+      fontFamily: "Roboto-Regular",
     },
     medium: {
-      fontFamily: "Roboto",
-      fontWeight: "500",
+      fontFamily: "Roboto-Medium",
     },
     light: {
-      fontFamily: "Roboto",
-      fontWeight: "300",
+      fontFamily: "Roboto-Light",
     },
     thin: {
-      fontFamily: "Roboto",
-      fontWeight: "200",
+      fontFamily: "Roboto-Light",
     },
   },
   android: {
     regular: {
-      fontFamily: "Roboto",
-      fontWeight: "400",
+      fontFamily: "Roboto-Regular",
     },
     medium: {
-      fontFamily: "Roboto",
-      fontWeight: "500",
+      fontFamily: "Roboto-Medium",
     },
     light: {
-      fontFamily: "Roboto",
-      fontWeight: "300",
+      fontFamily: "Roboto-Light",
     },
     thin: {
-      fontFamily: "Roboto",
-      fontWeight: "200",
+      fontFamily: "Roboto-Light",
     },
   },
 } as const;
@@ -76,5 +65,9 @@ const theme: MD2Theme = {
 };
 
 export function ThemeProvider({ children }: PropsWithChildren) {
+  const fontsLoaded = useFontsLoaded();
+  if (!fontsLoaded) {
+    return null;
+  }
   return <PaperProvider theme={theme}>{children}</PaperProvider>;
 }
