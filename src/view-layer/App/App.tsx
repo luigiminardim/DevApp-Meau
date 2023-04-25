@@ -1,11 +1,13 @@
 import { ThemeProvider } from "../contexts/ThemeContext";
 // import { LoginScreen } from "../screens";
-import { IntroductionScreen } from "../screens/introduction";
+// import { IntroductionScreen } from "../screens/introduction";
+import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 
 export function App() {
   return (
     <ThemeProvider>
-      <IntroductionScreen />
+      <OopsScreen />
+      {/* <IntroductionScreen /> */}
       {/* <LoginScreen /> */}
     </ThemeProvider>
   );
