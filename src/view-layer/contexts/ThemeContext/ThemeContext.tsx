@@ -65,10 +65,14 @@ const theme = {
     onPrimary: "#434343",
     primaryContainer: "#cfe9e5",
     onPrimaryContainer: "#434343",
-    secondary: "#ffd358",
+    secondary: "#f7a800",
     onSecondary: "#434343",
+    secondaryContainer: "#ffd358",
+    onSecondaryContainer: "#434343",
     background: "#fafafa",
     onBackground: "#757575",
+    surface: "#f1f2f2",
+    onSurface: "#757575",
   },
 };
 
