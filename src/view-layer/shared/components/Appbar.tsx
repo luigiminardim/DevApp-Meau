@@ -8,44 +8,81 @@ type AppbarProps = {
 
   /**
    * The color palette for the appbar.
-   * @default "primary"
+   * @default "primary-container"
    */
-  colorScheme?: "primary-container" | "transparent";
+  colorScheme?: "primary-container" | "secondary-container" | "transparent";
+
+  /**
+   * The action to display on the left side of the appbar.
+   * @default "menu"
+   */
+  leftAction?: "menu" | "back";
 };
 
-export function Appbar({
-  title,
-  colorScheme = "primary-container",
-}: AppbarProps) {
+export function Appbar(props: AppbarProps) {
+  const { title, leftAction = "menu" } = props;
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
-  const headerContainerStyle = {
-    "primary-container": styles.headerContainerPrimary,
-    transparent: styles.headerContainerTransparent,
-  }[colorScheme];
+  const styles = useMemo(() => createStyles(theme, props), [theme, props]);
 
   return (
-    <PaperAppbar.Header style={headerContainerStyle} statusBarHeight={0}>
+    <PaperAppbar.Header style={styles.header} statusBarHeight={0}>
       <StatusBar
         barStyle={"dark-content"}
-        backgroundColor={theme.colors.primary}
+        backgroundColor={styles.statusbar.backgroundColor}
       />
-      <PaperAppbar.Action icon="menu" />
-      <PaperAppbar.Content
-        title={title}
-        color={theme.colors.onPrimaryContainer}
-      />
+      {leftAction === "menu" ? (
+        <PaperAppbar.Action icon="menu" color={styles.content.color} />
+      ) : (
+        <PaperAppbar.Action icon="arrow-left" color={styles.content.color} />
+      )}
+      <PaperAppbar.Content title={title} color={styles.content.color} />
     </PaperAppbar.Header>
   );
 }
 
-const createStyles = (theme: MD3Theme) =>
+const containerPrimaryStyles = (theme: MD3Theme) =>
   StyleSheet.create({
-    headerContainerPrimary: {
+    statusbar: {
+      backgroundColor: theme.colors.primary,
+    },
+    header: {
       backgroundColor: theme.colors.primaryContainer,
     },
-    headerContainerTransparent: {
+    content: {
+      color: theme.colors.onPrimaryContainer,
+    },
+  });
+
+const secondaryStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    statusbar: {
+      backgroundColor: theme.colors.secondary,
+    },
+    header: {
+      backgroundColor: theme.colors.secondaryContainer,
+    },
+    content: {
+      color: theme.colors.onSecondaryContainer,
+    },
+  });
+
+const transparentStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    statusbar: {
+      backgroundColor: theme.colors.primary,
+    },
+    header: {
       backgroundColor: "transparent",
       elevation: 0,
     },
+    content: {
+      color: theme.colors.onPrimaryContainer,
+    },
   });
+
+const createStyles = (theme: MD3Theme, props: AppbarProps) =>
+  ({
+    "primary-container": containerPrimaryStyles(theme),
+    "secondary-container": secondaryStyles(theme),
+    transparent: transparentStyles(theme),
+  }[props.colorScheme ?? "primary-container"]);
