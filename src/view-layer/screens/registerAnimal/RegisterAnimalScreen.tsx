@@ -271,7 +271,7 @@ const createStyles = (theme: MD3Theme) =>
       paddingTop: 16,
       paddingHorizontal: 24,
       /** @todo Fix scroll view container height       */
-      paddingBottom: 1000,
+      paddingBottom: 24,
       backgroundColor: theme.colors.background,
     },
     title: {
