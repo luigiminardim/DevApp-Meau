@@ -1,23 +1,25 @@
+import { CoreLayer } from "../../core-layer";
+import { CoreLayerProvider } from "../contexts/CoreLayerContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import { RegisterAnimalScreen } from "../screens/registerAnimal";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-// import { LoginScreen } from "../screens";
+import { LoginScreen } from "../screens";
 // import { IntroductionScreen } from "../screens/introduction";
 // import { SignUpScreen } from "../screens/register";
 // import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 
-export function App() {
+export type AppProps = {
+  coreLayer: CoreLayer;
+};
+
+export function App({ coreLayer }: AppProps) {
   return (
-    <ThemeProvider>
-      <SafeAreaView style={styles.safeArea}>
-        <RegisterAnimalScreen />
+    <CoreLayerProvider coreLayer={coreLayer}>
+      <ThemeProvider>
         {/* <OopsScreen /> */}
         {/* <IntroductionScreen /> */}
-        {/* <LoginScreen /> */}
+        <LoginScreen />
         {/* <SignUpScreen /> */}
-      </SafeAreaView>
-    </ThemeProvider>
+      </ThemeProvider>
+    </CoreLayerProvider>
   );
 }
 
