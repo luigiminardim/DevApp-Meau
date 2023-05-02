@@ -1,3 +1,4 @@
+import "./services/firebaseConfig";
 import { CoreLayer } from "./src/core-layer";
 import { FirebaseModule } from "./src/gateway-layer/firebase-module";
 import { App } from "./src/view-layer/App";

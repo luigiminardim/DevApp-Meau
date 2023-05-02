@@ -1,15 +1,13 @@
 import { LoginUsecase } from "../../core-layer/user-module";
-
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+const auth = getAuth();
 export class FirebaseAuthGate implements LoginUsecase {
-  /** @todo */
-  loginWithPassword: LoginUsecase["loginWithPassword"] = (param) => {
-    return new Promise((resolve) => {
-      console.log(
-        `FirebaseAuth.loginWithPassword(${JSON.stringify(param, null, 2)})`
-      );
-      setTimeout(() => {
-        resolve({ type: "success" });
-      }, 1000);
-    });
+  loginWithPassword: LoginUsecase["loginWithPassword"] = async (param) => {
+    try {
+      await signInWithEmailAndPassword(auth, param.username, param.password);
+      return { type: "success" };
+    } catch (err) {
+      return { type: "error" };
+    }
   };
 }
