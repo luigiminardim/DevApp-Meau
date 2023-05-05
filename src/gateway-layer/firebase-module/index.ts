@@ -1,3 +1,4 @@
+import "./firebaseConfig";
 import { FirebaseAuthGate } from "./FirebaseAuthGate";
 
 export class FirebaseModule {
