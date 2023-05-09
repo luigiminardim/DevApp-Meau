@@ -2,8 +2,9 @@ import { SafeAreaView } from "react-native";
 import { CoreLayer } from "../../core-layer";
 import { CoreLayerProvider } from "../contexts/CoreLayerContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import { LoginScreen } from "../screens";
+// import { LoginScreen } from "../screens";
 import { StyleSheet } from "react-native";
+import { RegisterAnimalScreen } from "../screens/registerAnimal";
 // import { IntroductionScreen } from "../screens/introduction";
 // import { SignUpScreen } from "../screens/register";
 // import { OopsScreen } from "../screens/requireLogin/oopsScreen";
@@ -19,8 +20,9 @@ export function App({ coreLayer }: AppProps) {
         <ThemeProvider>
           {/* <OopsScreen /> */}
           {/* <IntroductionScreen /> */}
-          <LoginScreen />
+          {/* <LoginScreen /> */}
           {/* <SignUpScreen /> */}
+          <RegisterAnimalScreen />
         </ThemeProvider>
       </SafeAreaView>
     </CoreLayerProvider>
