@@ -3,7 +3,7 @@ import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import { useMemo } from "react";
 
-export function OopsScreen() {
+export function OopsScreen({ navigation }) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
@@ -21,6 +21,7 @@ export function OopsScreen() {
             compact
             buttonColor={theme.colors.primary}
             textColor={theme.colors.onPrimary}
+            onPress={() => navigation.navigate("RegUser")}
           >
             Fazer cadastro
           </Button>
@@ -33,6 +34,7 @@ export function OopsScreen() {
             compact
             buttonColor={theme.colors.primary}
             textColor={theme.colors.onPrimary}
+            onPress={() => navigation.navigate("Login")}
           >
             Fazer login
           </Button>

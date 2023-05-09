@@ -2,11 +2,13 @@ import { SafeAreaView } from "react-native";
 import { CoreLayer } from "../../core-layer";
 import { CoreLayerProvider } from "../contexts/CoreLayerContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import { LoginScreen } from "../screens";
+import { LoginScreen, SignUpScreen } from "../screens";
 import { StyleSheet } from "react-native";
-// import { IntroductionScreen } from "../screens/introduction";
-// import { SignUpScreen } from "../screens/register";
-// import { OopsScreen } from "../screens/requireLogin/oopsScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { OopsScreen } from "../screens/requireLogin/oopsScreen";
+import { IntroductionScreen } from "../screens/introduction";
+import { RegisterAnimalScreen } from "../screens/registerAnimal";
 
 export type AppProps = {
   coreLayer: CoreLayer;
@@ -15,17 +17,27 @@ export type AppProps = {
 export function App({ coreLayer }: AppProps) {
   return (
     <CoreLayerProvider coreLayer={coreLayer}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemeProvider>
-          {/* <OopsScreen /> */}
-          {/* <IntroductionScreen /> */}
-          <LoginScreen />
-          {/* <SignUpScreen /> */}
-        </ThemeProvider>
-      </SafeAreaView>
+      <NavigationContainer>
+        <SafeAreaView style={styles.safeArea}>
+          <ThemeProvider>
+            <Stack.Navigator
+              initialRouteName="Start"
+              screenOptions={{ headerShown: false }}
+            >
+              <Stack.Screen name="Start" component={IntroductionScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Ops" component={OopsScreen} />
+              <Stack.Screen name="RegAnim" component={RegisterAnimalScreen} />
+              <Stack.Screen name="RegUser" component={SignUpScreen} />
+            </Stack.Navigator>
+          </ThemeProvider>
+        </SafeAreaView>
+      </NavigationContainer>
     </CoreLayerProvider>
   );
 }
+
+const Stack = createNativeStackNavigator();
 
 const styles = StyleSheet.create({
   safeArea: {

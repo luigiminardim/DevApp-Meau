@@ -4,7 +4,7 @@ import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
 import { useMemo } from "react";
 
-export function IntroductionScreen() {
+export function IntroductionScreen({ navigation }) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
@@ -44,6 +44,7 @@ export function IntroductionScreen() {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
+            onPress={() => navigation.navigate("Ops")}
           >
             Cadastrar Animal
           </Button>
@@ -52,6 +53,7 @@ export function IntroductionScreen() {
             mode="text"
             compact
             uppercase={false}
+            onPress={() => navigation.navigate("Login")}
           >
             login
           </Button>
