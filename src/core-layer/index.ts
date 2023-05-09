@@ -1,9 +1,9 @@
-import { LoginUsecase, UserModule } from "./user-module";
+import { LoginUsecase, UserModule, SignUpUsecase } from "./user-module";
 
 export class CoreLayer {
   userModule: UserModule;
 
-  constructor(loginUsecase: LoginUsecase) {
-    this.userModule = new UserModule(loginUsecase);
+  constructor(loginUsecase: LoginUsecase, public signUpUsecase: SignUpUsecase) {
+    this.userModule = new UserModule(loginUsecase, signUpUsecase);
   }
 }
