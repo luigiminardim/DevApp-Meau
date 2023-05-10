@@ -6,11 +6,12 @@ import {
   Checkbox,
   MD3Theme,
   RadioButton,
+  Snackbar,
   Text,
   TextInput,
   useTheme,
 } from "react-native-paper";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Formik } from "formik";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
@@ -83,6 +84,8 @@ export function RegisterAnimalScreen() {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+
   const {
     animalModule: { registerAnimalUsecase },
   } = useCoreLayer();
@@ -101,7 +104,7 @@ export function RegisterAnimalScreen() {
       ) {
         return;
       }
-      registerAnimalUsecase.registerAnimal({
+      const result = await registerAnimalUsecase.registerAnimal({
         name: formValue.name,
         species: formValue.species,
         sex: formValue.sex,
@@ -130,8 +133,13 @@ export function RegisterAnimalScreen() {
             formValue.adoptionRequirements.animalPreviousVisit,
           postAdoptionFollowup,
         },
-        commentary: "",
+        commentary: formValue.commentary,
       });
+      if (result.type === "error") {
+        setSnackbarMessage("Erro ao registrar animal:" + result.error);
+      } else {
+        setSnackbarMessage("Animal registrado com sucesso!");
+      }
     },
     [registerAnimalUsecase]
   );
@@ -147,7 +155,14 @@ export function RegisterAnimalScreen() {
         initialValues={registerAnimalFormInitialValues}
         onSubmit={onSubmit}
       >
-        {({ values, handleBlur, submitForm, handleChange, setFieldValue }) => (
+        {({
+          values,
+          handleBlur,
+          submitForm,
+          handleChange,
+          setFieldValue,
+          isSubmitting,
+        }) => (
           <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>Adoção</Text>
             <View style={styles.formField}>
@@ -599,6 +614,7 @@ export function RegisterAnimalScreen() {
                 mode="contained"
                 buttonColor={theme.colors.secondaryContainer}
                 textColor={theme.colors.onSecondaryContainer}
+                loading={isSubmitting}
                 onPress={submitForm}
               >
                 Colocar para adoção
@@ -607,6 +623,12 @@ export function RegisterAnimalScreen() {
           </ScrollView>
         )}
       </Formik>
+      <Snackbar
+        visible={!!snackbarMessage}
+        onDismiss={() => setSnackbarMessage(null)}
+      >
+        {snackbarMessage}
+      </Snackbar>
     </>
   );
 }

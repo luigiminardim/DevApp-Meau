@@ -1,9 +1,10 @@
+import { Firestore } from "firebase/firestore";
 import { RegisterAnimalGate } from "./gates/RegisterAnimalGate";
 
 export class FirebaseAnimalModule {
   registerAnimalGate: RegisterAnimalGate;
 
-  constructor() {
-    this.registerAnimalGate = new RegisterAnimalGate();
+  constructor(firebaseDb: Firestore) {
+    this.registerAnimalGate = new RegisterAnimalGate(firebaseDb);
   }
 }
