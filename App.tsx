@@ -3,7 +3,7 @@ import { FirebaseModule } from "./src/gateway-layer/firebase-module";
 import { App } from "./src/view-layer/App";
 
 const {
-  authGate,
+  authModule: { authGate },
   userModule: { signUpGate },
 } = new FirebaseModule();
 

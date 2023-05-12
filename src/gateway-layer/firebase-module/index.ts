@@ -1,12 +1,12 @@
-import { FirebaseAuthGate } from "./FirebaseAuthGate";
-import { firebaseDb } from "./firebaseConfig";
+import { FirebaseAuthModule } from "./auth-module";
+import { firebaseAuth, firebaseDb } from "./firebaseConfig";
 import { FirebaseUserModule } from "./user-module";
 
 export class FirebaseModule {
-  authGate: FirebaseAuthGate;
+  authModule: FirebaseAuthModule;
   userModule: FirebaseUserModule;
   constructor() {
-    this.authGate = new FirebaseAuthGate();
+    this.authModule = new FirebaseAuthModule(firebaseAuth);
     this.userModule = new FirebaseUserModule(firebaseDb);
   }
 }
