@@ -13,6 +13,7 @@ import { useMemo } from "react";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import CryptoES from "crypto-es";
 
 type SignUpFormValue = {
   name: string;
@@ -44,11 +45,22 @@ export function SignUpScreen() {
   const [snackMessage, setSnackMessage] = useState(null as string | null);
 
   const {
-    userModule: { signUpUsecase },
+    userModule: { signUpUsecase, loginUsecase },
   } = useCoreLayer();
   const onSubmit = useCallback(
     async (formValue: SignUpFormValue) => {
       console.log(formValue);
+      const userAuth = await loginUsecase.createUser({
+        username: formValue.email,
+        password: formValue.password,
+      });
+      if (userAuth.type === "error")
+        setSnackMessage("Erro ao criar usuário no firebaseauth");
+      const hashedPassword = CryptoES.AES.encrypt(
+        CryptoES.enc.Utf8.parse(),
+        formValue.password
+      ).toString();
+      console.log(hashedPassword);
       const result = await signUpUsecase.signUpWithPassword({
         name: formValue.name,
         age: formValue.age,
@@ -58,12 +70,12 @@ export function SignUpScreen() {
         address: formValue.address,
         phone: formValue.phone,
         username: formValue.username,
-        password: formValue.password,
+        password: hashedPassword,
       });
       if (result.type === "error") setSnackMessage("Erro");
       else setSnackMessage("Sucesso");
     },
-    [signUpUsecase]
+    [signUpUsecase, loginUsecase]
   );
 
   const styles = useMemo(() => createStyles(theme), [theme]);
