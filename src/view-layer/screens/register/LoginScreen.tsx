@@ -15,7 +15,7 @@ const initialValues: LoginFormValue = {
   password: "",
 };
 
-export function LoginScreen() {
+export function LoginScreen({ navigation }) {
   const theme = useTheme();
 
   const [snackMessage, setSnackMessage] = useState(null as string | null);
@@ -29,10 +29,14 @@ export function LoginScreen() {
         password: formValue.password,
         username: formValue.username,
       });
-      if (result.type === "error") setSnackMessage("Erro");
-      else setSnackMessage("Sucesso");
+      if (result.type === "error")
+        setSnackMessage("Não foi possível fazer login.");
+      else {
+        setSnackMessage("Sucesso");
+        navigation.navigate("RegAnim");
+      }
     },
-    [loginUsecase]
+    [loginUsecase, navigation]
   );
 
   return (
