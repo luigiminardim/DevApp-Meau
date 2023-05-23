@@ -8,6 +8,5 @@ export interface SignUpUsecase {
     address: string;
     phone: string;
     username: string;
-    password: string;
   }): Promise<{ type: "success" } | { type: "error" }>;
 }

@@ -56,11 +56,6 @@ export function SignUpScreen() {
       });
       if (userAuth.type === "error")
         setSnackMessage("Erro ao criar usuário no firebaseauth");
-      const hashedPassword = CryptoES.AES.encrypt(
-        CryptoES.enc.Utf8.parse(),
-        formValue.password
-      ).toString();
-      console.log(hashedPassword);
       const result = await signUpUsecase.signUpWithPassword({
         name: formValue.name,
         age: formValue.age,
@@ -70,7 +65,6 @@ export function SignUpScreen() {
         address: formValue.address,
         phone: formValue.phone,
         username: formValue.username,
-        password: hashedPassword,
       });
       if (result.type === "error") setSnackMessage("Erro");
       else setSnackMessage("Sucesso");
