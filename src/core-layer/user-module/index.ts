@@ -6,5 +6,8 @@ export { LoginUsecase };
 export { SignUpUsecase };
 
 export class UserModule {
-  constructor(public loginUsecase: LoginUsecase) {}
+  constructor(
+    public loginUsecase: LoginUsecase,
+    public signUpUsecase: SignUpUsecase
+  ) {}
 }
