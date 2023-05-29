@@ -4,9 +4,9 @@ import { CoreLayerProvider } from "../contexts/CoreLayerContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
 // import { LoginScreen } from "../screens";
 import { StyleSheet } from "react-native";
-import { RegisterAnimalScreen } from "../screens/registerAnimal";
+// import { RegisterAnimalScreen } from "../screens/registerAnimal";
 // import { IntroductionScreen } from "../screens/introduction";
-// import { SignUpScreen } from "../screens/register";
+import { SignUpScreen } from "../screens/register";
 // import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 
 export type AppProps = {
@@ -22,7 +22,8 @@ export function App({ coreLayer }: AppProps) {
           {/* <IntroductionScreen /> */}
           {/* <LoginScreen /> */}
           {/* <SignUpScreen /> */}
-          <RegisterAnimalScreen />
+          {/* <RegisterAnimalScreen /> */}
+          <SignUpScreen />
         </ThemeProvider>
       </SafeAreaView>
     </CoreLayerProvider>
