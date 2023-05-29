@@ -3,10 +3,11 @@ import { FirebaseModule } from "./src/gateway-layer/firebase-module";
 import { App } from "./src/view-layer/App";
 
 const {
-  authGate,
+  authModule: { authGate },
+  userModule: { signUpGate },
   animalModule: { registerAnimalGate },
 } = new FirebaseModule();
-const coreLayer = new CoreLayer(authGate, registerAnimalGate);
+const coreLayer = new CoreLayer(signUpGate, authGate, registerAnimalGate);
 
 export default function Main() {
   return <App coreLayer={coreLayer} />;

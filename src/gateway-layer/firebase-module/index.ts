@@ -1,13 +1,16 @@
-import { firebaseDb } from "./firebaseConfig";
-import { FirebaseAuthGate } from "./FirebaseAuthGate";
+import { firebaseAuth, firebaseDb } from "./firebaseConfig";
 import { FirebaseAnimalModule } from "./animal-module";
+import { FirebaseUserModule } from "./user-module";
+import { FirebaseAuthModule } from "./auth-module";
 
 export class FirebaseModule {
-  authGate: FirebaseAuthGate;
+  authModule: FirebaseAuthModule;
+  userModule: FirebaseUserModule;
   animalModule: FirebaseAnimalModule;
 
   constructor() {
-    this.authGate = new FirebaseAuthGate();
+    this.authModule = new FirebaseAuthModule(firebaseAuth);
     this.animalModule = new FirebaseAnimalModule(firebaseDb);
+    this.userModule = new FirebaseUserModule(firebaseDb);
   }
 }
