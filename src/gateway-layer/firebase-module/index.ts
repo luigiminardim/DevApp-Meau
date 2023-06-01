@@ -11,6 +11,6 @@ export class FirebaseModule {
   constructor() {
     this.authModule = new FirebaseAuthModule(firebaseAuth);
     this.animalModule = new FirebaseAnimalModule(firebaseDb);
-    this.userModule = new FirebaseUserModule(firebaseDb);
+    this.userModule = new FirebaseUserModule(firebaseAuth, firebaseDb);
   }
 }

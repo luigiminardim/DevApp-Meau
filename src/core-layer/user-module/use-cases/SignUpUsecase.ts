@@ -1,12 +1,12 @@
 export interface SignUpUsecase {
   signUpWithPassword(param: {
-    name: string;
-    age: string;
     email: string;
+    password: string;
+    name: string;
+    age: number;
     state: string;
     city: string;
     address: string;
     phone: string;
-    username: string;
-  }): Promise<{ type: "success" } | { type: "error" }>;
+  }): Promise<{ type: "success" } | { type: "error"; error: string }>;
 }

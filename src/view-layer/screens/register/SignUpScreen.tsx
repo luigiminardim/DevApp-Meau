@@ -22,7 +22,6 @@ type SignUpFormValue = {
   city: string;
   address: string;
   phone: string;
-  username: string;
   password: string;
 };
 
@@ -34,7 +33,6 @@ const initialValues: SignUpFormValue = {
   city: "",
   address: "",
   phone: "",
-  username: "",
   password: "",
 };
 
@@ -44,31 +42,24 @@ export function SignUpScreen() {
   const [snackMessage, setSnackMessage] = useState(null as string | null);
 
   const {
-    userModule: { signUpUsecase, loginUsecase },
+    userModule: { signUpUsecase },
   } = useCoreLayer();
   const onSubmit = useCallback(
     async (formValue: SignUpFormValue) => {
-      console.log(formValue);
-      const userAuth = await loginUsecase.createUser({
-        username: formValue.email,
-        password: formValue.password,
-      });
-      if (userAuth.type === "error")
-        setSnackMessage("Erro ao criar usuário no firebaseauth");
       const result = await signUpUsecase.signUpWithPassword({
-        name: formValue.name,
-        age: formValue.age,
         email: formValue.email,
+        password: formValue.password,
+        name: formValue.name,
+        age: Number(formValue.age),
         state: formValue.state,
         city: formValue.city,
         address: formValue.address,
         phone: formValue.phone,
-        username: formValue.username,
       });
-      if (result.type === "error") setSnackMessage("Erro");
+      if (result.type === "error") setSnackMessage(result.error);
       else setSnackMessage("Sucesso");
     },
-    [signUpUsecase, loginUsecase]
+    [signUpUsecase]
   );
 
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -152,15 +143,6 @@ export function SignUpScreen() {
                 />
 
                 <Text style={styles.subtitle}>INFORMAÇÕES DE PERFIL</Text>
-
-                <TextInput
-                  placeholder="Nome de usuário"
-                  dense
-                  style={styles.inputStyle}
-                  onChangeText={handleChange("username")}
-                  onBlur={handleBlur("username")}
-                  value={values.username}
-                />
 
                 <TextInput
                   secureTextEntry
