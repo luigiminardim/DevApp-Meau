@@ -3,8 +3,15 @@ import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
 import { useMemo } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
 
-export function IntroductionScreen({ navigation }) {
+type StackProps = NativeStackScreenProps<
+  StackNavigationParamList,
+  "Introduction"
+>;
+
+export function IntroductionScreen({ navigation }: StackProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (

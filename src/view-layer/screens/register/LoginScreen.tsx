@@ -4,20 +4,22 @@ import { Appbar } from "../../shared/components/Appbar";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackNavigationParamList } from "../../App/shared/NavigationProps";
 
 type LoginFormValue = {
   username: string;
   password: string;
 };
+type StackProps = NativeStackScreenProps<StackNavigationParamList, "Login">;
 
 const initialValues: LoginFormValue = {
   username: "",
   password: "",
 };
 
-export function LoginScreen({ navigation }) {
+export function LoginScreen({ navigation }: StackProps) {
   const theme = useTheme();
-
   const [snackMessage, setSnackMessage] = useState(null as string | null);
 
   const {

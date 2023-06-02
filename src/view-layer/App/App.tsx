@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 import { IntroductionScreen } from "../screens/introduction";
 import { RegisterAnimalScreen } from "../screens/registerAnimal";
+import { StackNavigationParamList } from "./shared/NavigationProps";
 
 export type AppProps = {
   coreLayer: CoreLayer;
@@ -21,10 +22,13 @@ export function App({ coreLayer }: AppProps) {
         <SafeAreaView style={styles.safeArea}>
           <ThemeProvider>
             <Stack.Navigator
-              initialRouteName="Start"
+              initialRouteName="Introduction"
               screenOptions={{ headerShown: false }}
             >
-              <Stack.Screen name="Start" component={IntroductionScreen} />
+              <Stack.Screen
+                name="Introduction"
+                component={IntroductionScreen}
+              />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Ops" component={OopsScreen} />
               <Stack.Screen name="RegAnim" component={RegisterAnimalScreen} />
@@ -37,8 +41,7 @@ export function App({ coreLayer }: AppProps) {
   );
 }
 
-const Stack = createNativeStackNavigator();
-
+const Stack = createNativeStackNavigator<StackNavigationParamList>();
 const styles = StyleSheet.create({
   safeArea: {
     height: "100%",
