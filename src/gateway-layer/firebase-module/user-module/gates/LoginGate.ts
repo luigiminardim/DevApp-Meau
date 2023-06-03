@@ -3,18 +3,44 @@ import {
   signInWithEmailAndPassword,
   Auth as FirebaseAuth,
 } from "firebase/auth";
+import {
+  collection,
+  DocumentData,
+  Firestore,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { UserBuilder } from "./utils/UserBuilder";
+import { UserData } from "../dto/UserData";
 
 export class LoginGate implements LoginUsecase {
-  constructor(private firebaseAuth: FirebaseAuth) {}
+  constructor(
+    private firebaseAuth: FirebaseAuth,
+    private firebaseDb: Firestore,
+    private userBuilder: UserBuilder
+  ) {}
 
   loginWithPassword: LoginUsecase["loginWithPassword"] = async (param) => {
     try {
-      await signInWithEmailAndPassword(
+      const {
+        user: { uid: id },
+      } = await signInWithEmailAndPassword(
         this.firebaseAuth,
         param.username,
         param.password
       );
-      return { type: "success" };
+      const usersRef = collection(this.firebaseDb, "users");
+      const userQuery = query(usersRef, where("id", "==", id));
+      const querySnapshot = await getDocs(userQuery);
+      const userDocs = [] as DocumentData[];
+      querySnapshot.forEach((doc) => userDocs.push(doc.data()));
+      const userDoc = userDocs[0];
+      if (!userDoc) return { type: "error", error: "User not found" };
+      const user = await this.userBuilder.buildUserFromData(
+        userDoc as UserData
+      );
+      return { type: "success", user };
     } catch (err) {
       return { type: "error", error: String(err) };
     }
