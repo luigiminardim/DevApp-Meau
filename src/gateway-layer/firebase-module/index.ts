@@ -7,7 +7,7 @@ export class FirebaseModule {
   animalModule: FirebaseAnimalModule;
 
   constructor() {
-    this.animalModule = new FirebaseAnimalModule(firebaseDb);
+    this.animalModule = new FirebaseAnimalModule(firebaseDb, firebaseStorage);
     this.userModule = new FirebaseUserModule(
       firebaseAuth,
       firebaseDb,

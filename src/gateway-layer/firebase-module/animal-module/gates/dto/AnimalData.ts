@@ -1,6 +1,7 @@
 export type AnimalData = {
   id: string;
   name: string;
+  imageUri: string;
   species: "dog" | "cat";
   sex: "male" | "female";
   size: "small" | "medium" | "big";

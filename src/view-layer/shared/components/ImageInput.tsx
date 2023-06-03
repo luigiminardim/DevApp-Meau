@@ -7,18 +7,19 @@ import * as ImagePicker from "expo-image-picker";
 type ImageInputProps = {
   value: null | string;
   onChangeValue: (value: null | string) => void;
+  aspect: [number, number];
 };
 
-export function ImageInput({ value, onChangeValue }: ImageInputProps) {
+export function ImageInput({ value, onChangeValue, aspect }: ImageInputProps) {
   const onOpenSelectPicture = useCallback(async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsMultipleSelection: false,
       allowsEditing: true,
-      aspect: [1, 1],
+      aspect,
     });
     if (result.canceled || !result.assets[0]) return;
     onChangeValue(result.assets[0].uri);
-  }, [onChangeValue]);
+  }, [aspect, onChangeValue]);
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -30,7 +31,11 @@ export function ImageInput({ value, onChangeValue }: ImageInputProps) {
     >
       {value ? (
         <>
-          <Image source={{ uri: value }} style={styles.image} />
+          <Image
+            source={{ uri: value }}
+            style={styles.image}
+            resizeMode={"cover"}
+          />
         </>
       ) : (
         <>
@@ -49,7 +54,7 @@ const createStyles = (theme: MD3Theme) =>
     },
     content: {
       height: 128,
-      width: 128,
+      minWidth: 128,
       alignItems: "center",
       justifyContent: "center",
     },
