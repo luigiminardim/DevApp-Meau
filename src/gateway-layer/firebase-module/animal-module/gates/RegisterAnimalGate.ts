@@ -1,14 +1,18 @@
 import { addDoc, Firestore, collection } from "firebase/firestore";
+import { FirebaseStorage, ref, uploadBytesResumable } from "firebase/storage";
 import {
   RegisterAnimalParam,
   RegisterAnimalUsecase,
 } from "../../../../core-layer/animal-module";
 import { AnimalData } from "./dto/AnimalData";
 
-type AddAnimalDocData = Omit<AnimalData, "id">;
+type AddAnimalDocData = Omit<AnimalData, "id" | "imageUri">;
 
 export class RegisterAnimalGate implements RegisterAnimalUsecase {
-  constructor(private firebaseDb: Firestore) {}
+  constructor(
+    private firebaseDb: Firestore,
+    private firebaseStorage: FirebaseStorage
+  ) {}
 
   buildAddAnimalDocData(param: RegisterAnimalParam): AddAnimalDocData {
     const postAdoptionFollowup =
@@ -54,6 +58,9 @@ export class RegisterAnimalGate implements RegisterAnimalUsecase {
         collection(this.firebaseDb, "animals"),
         addAnimalDocData
       );
+      const imageRef = ref(this.firebaseStorage, `animals/image/${id}`);
+      const imageBlob = await fetch(param.imageUri).then((res) => res.blob());
+      await uploadBytesResumable(imageRef, imageBlob);
       return { type: "success", animalId: id };
     } catch (error) {
       return { type: "error", error: error as string };
