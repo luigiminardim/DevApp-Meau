@@ -1,12 +1,12 @@
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { CoreLayer } from "../../core-layer";
 import { CoreLayerProvider } from "../contexts/CoreLayerContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
 // import { LoginScreen } from "../screens";
 import { StyleSheet } from "react-native";
-// import { RegisterAnimalScreen } from "../screens/registerAnimal";
+import { RegisterAnimalScreen } from "../screens/registerAnimal";
 // import { IntroductionScreen } from "../screens/introduction";
-import { SignUpScreen } from "../screens/register";
+// import { SignUpScreen } from "../screens/register";
 // import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 
 export type AppProps = {
@@ -16,23 +16,24 @@ export type AppProps = {
 export function App({ coreLayer }: AppProps) {
   return (
     <CoreLayerProvider coreLayer={coreLayer}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemeProvider>
-          {/* <OopsScreen /> */}
-          {/* <IntroductionScreen /> */}
-          {/* <LoginScreen /> */}
-          {/* <SignUpScreen /> */}
-          {/* <RegisterAnimalScreen /> */}
-          <SignUpScreen />
-        </ThemeProvider>
-      </SafeAreaView>
+      <ThemeProvider>
+        <SafeAreaView style={styles.safeArea}>
+          <ScrollView>
+            {/* <OopsScreen /> */}
+            {/* <IntroductionScreen /> */}
+            {/* <LoginScreen /> */}
+            {/* <SignUpScreen /> */}
+            <RegisterAnimalScreen />
+            {/* <SignUpScreen /> */}
+          </ScrollView>
+        </SafeAreaView>
+      </ThemeProvider>
     </CoreLayerProvider>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    height: "100%",
-    overflow: "hidden",
+    flexGrow: 1,
   },
 });
