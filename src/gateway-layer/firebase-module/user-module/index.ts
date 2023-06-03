@@ -3,6 +3,7 @@ import { Firestore } from "firebase/firestore";
 import { SignUpGate } from "./gates/SignUpGate";
 import { LoginGate } from "./gates/LoginGate";
 import { FirebaseStorage } from "firebase/storage";
+import { UserBuilder } from "./gates/utils/UserBuilder";
 
 export class FirebaseUserModule {
   signUpGate: SignUpGate;
@@ -13,7 +14,8 @@ export class FirebaseUserModule {
     firebaseDb: Firestore,
     firebaseStorage: FirebaseStorage
   ) {
+    const userBuilder = new UserBuilder(firebaseStorage);
     this.signUpGate = new SignUpGate(firebaseAuth, firebaseDb, firebaseStorage);
-    this.loginGate = new LoginGate(firebaseAuth);
+    this.loginGate = new LoginGate(firebaseAuth, firebaseDb, userBuilder);
   }
 }
