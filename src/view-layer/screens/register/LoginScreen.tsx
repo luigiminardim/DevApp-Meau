@@ -4,6 +4,7 @@ import { Appbar } from "../../shared/components/Appbar";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 type LoginFormValue = {
   username: string;
@@ -17,6 +18,7 @@ const initialValues: LoginFormValue = {
 
 export function LoginScreen() {
   const theme = useTheme();
+  const { setUser } = useUserContext();
 
   const [snackMessage, setSnackMessage] = useState(null as string | null);
 
@@ -29,10 +31,14 @@ export function LoginScreen() {
         password: formValue.password,
         username: formValue.username,
       });
-      if (result.type === "error") setSnackMessage("Erro");
-      else setSnackMessage("Sucesso");
+      if (result.type === "error") {
+        setSnackMessage("Erro");
+        return;
+      }
+      setUser(result.user);
+      setSnackMessage("Sucesso");
     },
-    [loginUsecase]
+    [loginUsecase, setUser]
   );
 
   return (
