@@ -169,7 +169,11 @@ export function SignUpScreen() {
                 <Text style={styles.subtitle}>FOTO DE PERFIL</Text>
               </View>
               <View style={styles.imageInputContainer}>
-                <ImageInput value={imageUri} onChangeValue={setImageUri} />
+                <ImageInput
+                  value={imageUri}
+                  onChangeValue={setImageUri}
+                  aspect={[1, 1]}
+                />
               </View>
               <Button
                 mode="contained"
