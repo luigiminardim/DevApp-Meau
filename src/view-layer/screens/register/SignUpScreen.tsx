@@ -1,6 +1,5 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import {
-  IconButton,
   MD3Theme,
   Text,
   useTheme,
@@ -13,6 +12,7 @@ import { useMemo } from "react";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import { ImageInput } from "../../shared/components/ImageInput";
 
 type SignUpFormValue = {
   name: string;
@@ -39,6 +39,7 @@ const initialValues: SignUpFormValue = {
 export function SignUpScreen() {
   const theme = useTheme();
 
+  const [imageUri, setImageUri] = useState(null as null | string);
   const [snackMessage, setSnackMessage] = useState(null as string | null);
 
   const {
@@ -46,6 +47,9 @@ export function SignUpScreen() {
   } = useCoreLayer();
   const onSubmit = useCallback(
     async (formValue: SignUpFormValue) => {
+      if (!imageUri) {
+        return;
+      }
       const result = await signUpUsecase.signUpWithPassword({
         email: formValue.email,
         password: formValue.password,
@@ -55,11 +59,12 @@ export function SignUpScreen() {
         city: formValue.city,
         address: formValue.address,
         phone: formValue.phone,
+        imageUri,
       });
       if (result.type === "error") setSnackMessage(result.error);
       else setSnackMessage("Sucesso");
     },
-    [signUpUsecase]
+    [imageUri, signUpUsecase]
   );
 
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -163,15 +168,8 @@ export function SignUpScreen() {
 
                 <Text style={styles.subtitle}>FOTO DE PERFIL</Text>
               </View>
-              <View style={styles.pictureRectangle}>
-                <IconButton
-                  icon="plus-circle-outline"
-                  size={24}
-                  onPress={() => {}}
-                  style={styles.controlPointIcon}
-                  iconColor="#757575"
-                />
-                <Text style={styles.pictureText}>adicionar foto</Text>
+              <View style={styles.imageInputContainer}>
+                <ImageInput value={imageUri} onChangeValue={setImageUri} />
               </View>
               <Button
                 mode="contained"
@@ -245,23 +243,8 @@ const createStyles = (theme: MD3Theme) =>
       paddingTop: 36,
     },
 
-    pictureRectangle: {
-      marginTop: 16,
-      width: 128,
-      height: 128,
-      backgroundColor: "#e6e7e7",
-      paddingTop: 16,
-      borderRadius: 2,
-      alignSelf: "center",
-    },
-
-    controlPointIcon: {
-      alignSelf: "center",
-    },
-
-    pictureText: {
-      color: "#757575",
-      textAlign: "center",
+    imageInputContainer: {
+      alignItems: "center",
     },
 
     buttonContainer: {
