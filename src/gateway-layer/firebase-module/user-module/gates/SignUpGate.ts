@@ -11,9 +11,7 @@ import { FirebaseStorage, ref, uploadBytes } from "firebase/storage";
 import { SignUpUsecase } from "../../../../core-layer/user-module";
 import { UserData } from "../dto/UserData";
 
-type CreateUserDocumentData = Omit<UserData, "image"> & {
-  image: string;
-};
+type CreateUserDocumentData = Omit<UserData, "imageUri">;
 
 export class SignUpGate implements SignUpUsecase {
   constructor(
@@ -33,7 +31,6 @@ export class SignUpGate implements SignUpUsecase {
         `users/image/${createAuthResult.user.uid}`
       );
       const imageBlob = await fetch(param.imageUri).then((res) => res.blob());
-      const uploadImageResult = await uploadBytes(imageRef, imageBlob);
       const userData: CreateUserDocumentData = {
         id: createAuthResult.user.uid,
         email: param.email,
@@ -43,10 +40,10 @@ export class SignUpGate implements SignUpUsecase {
         city: param.city,
         address: param.address,
         phone: param.phone,
-        image: uploadImageResult.ref.fullPath,
       };
       const dbRef = collection(this.firebaseDb, "users");
       const { id } = await addDoc(dbRef, userData);
+      await uploadBytes(imageRef, imageBlob);
       return { type: "success", userId: id };
     } catch (err) {
       return { type: "error", error: String(err) };
