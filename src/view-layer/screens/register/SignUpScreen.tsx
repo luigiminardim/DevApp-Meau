@@ -1,6 +1,5 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import {
-  IconButton,
   MD3Theme,
   Text,
   useTheme,
@@ -13,6 +12,7 @@ import { useMemo } from "react";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import { ImageInput } from "../../shared/components/ImageInput";
 
 type SignUpFormValue = {
   name: string;
@@ -22,7 +22,6 @@ type SignUpFormValue = {
   city: string;
   address: string;
   phone: string;
-  username: string;
   password: string;
 };
 
@@ -34,41 +33,38 @@ const initialValues: SignUpFormValue = {
   city: "",
   address: "",
   phone: "",
-  username: "",
   password: "",
 };
 
 export function SignUpScreen() {
   const theme = useTheme();
 
+  const [imageUri, setImageUri] = useState(null as null | string);
   const [snackMessage, setSnackMessage] = useState(null as string | null);
 
   const {
-    userModule: { signUpUsecase, loginUsecase },
+    userModule: { signUpUsecase },
   } = useCoreLayer();
   const onSubmit = useCallback(
     async (formValue: SignUpFormValue) => {
-      console.log(formValue);
-      const userAuth = await loginUsecase.createUser({
-        username: formValue.email,
-        password: formValue.password,
-      });
-      if (userAuth.type === "error")
-        setSnackMessage("Erro ao criar usuário no firebaseauth");
+      if (!imageUri) {
+        return;
+      }
       const result = await signUpUsecase.signUpWithPassword({
-        name: formValue.name,
-        age: formValue.age,
         email: formValue.email,
+        password: formValue.password,
+        name: formValue.name,
+        age: Number(formValue.age),
         state: formValue.state,
         city: formValue.city,
         address: formValue.address,
         phone: formValue.phone,
-        username: formValue.username,
+        imageUri,
       });
-      if (result.type === "error") setSnackMessage("Erro");
+      if (result.type === "error") setSnackMessage(result.error);
       else setSnackMessage("Sucesso");
     },
-    [signUpUsecase, loginUsecase]
+    [imageUri, signUpUsecase]
   );
 
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -154,15 +150,6 @@ export function SignUpScreen() {
                 <Text style={styles.subtitle}>INFORMAÇÕES DE PERFIL</Text>
 
                 <TextInput
-                  placeholder="Nome de usuário"
-                  dense
-                  style={styles.inputStyle}
-                  onChangeText={handleChange("username")}
-                  onBlur={handleBlur("username")}
-                  value={values.username}
-                />
-
-                <TextInput
                   secureTextEntry
                   placeholder="Senha"
                   dense
@@ -181,15 +168,12 @@ export function SignUpScreen() {
 
                 <Text style={styles.subtitle}>FOTO DE PERFIL</Text>
               </View>
-              <View style={styles.pictureRectangle}>
-                <IconButton
-                  icon="plus-circle-outline"
-                  size={24}
-                  onPress={() => {}}
-                  style={styles.controlPointIcon}
-                  iconColor="#757575"
+              <View style={styles.imageInputContainer}>
+                <ImageInput
+                  value={imageUri}
+                  onChangeValue={setImageUri}
+                  aspect={[1, 1]}
                 />
-                <Text style={styles.pictureText}>adicionar foto</Text>
               </View>
               <Button
                 mode="contained"
@@ -263,23 +247,8 @@ const createStyles = (theme: MD3Theme) =>
       paddingTop: 36,
     },
 
-    pictureRectangle: {
-      marginTop: 16,
-      width: 128,
-      height: 128,
-      backgroundColor: "#e6e7e7",
-      paddingTop: 16,
-      borderRadius: 2,
-      alignSelf: "center",
-    },
-
-    controlPointIcon: {
-      alignSelf: "center",
-    },
-
-    pictureText: {
-      color: "#757575",
-      textAlign: "center",
+    imageInputContainer: {
+      alignItems: "center",
     },
 
     buttonContainer: {

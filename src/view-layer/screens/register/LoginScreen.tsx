@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../App/shared/NavigationProps";
+import { useUserContext } from "../../contexts/UserContext";
 
 type LoginFormValue = {
   username: string;
@@ -20,8 +21,8 @@ const initialValues: LoginFormValue = {
 
 export function LoginScreen({ navigation }: StackProps) {
   const theme = useTheme();
+  const { setUser } = useUserContext();
   const [snackMessage, setSnackMessage] = useState(null as string | null);
-
   const {
     userModule: { loginUsecase },
   } = useCoreLayer();
@@ -31,14 +32,15 @@ export function LoginScreen({ navigation }: StackProps) {
         password: formValue.password,
         username: formValue.username,
       });
-      if (result.type === "error")
-        setSnackMessage("Não foi possível fazer login.");
-      else {
-        setSnackMessage("Sucesso");
-        navigation.navigate("RegAnim"); //TODO: navegar para o parametro recebido
+      if (result.type === "error") {
+        setSnackMessage("Erro");
+        return;
       }
+      setUser(result.user);
+      setSnackMessage("Sucesso");
+      navigation.navigate("RegAnim"); //TODO: navegar para o parametro recebido
     },
-    [loginUsecase, navigation]
+    [loginUsecase, setUser, navigation]
   );
 
   return (

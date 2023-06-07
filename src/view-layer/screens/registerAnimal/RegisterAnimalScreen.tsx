@@ -2,7 +2,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar } from "../../shared/components/Appbar";
 import {
   Button,
-  Card,
   Checkbox,
   MD3Theme,
   RadioButton,
@@ -12,12 +11,13 @@ import {
   useTheme,
 } from "react-native-paper";
 import { useCallback, useMemo, useState } from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Formik } from "formik";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import { ImageInput } from "../../shared/components/ImageInput";
 
 type RegisterAnimalFormValue = {
   name: string;
+  imageUri?: string;
   species?: "dog" | "cat";
   sex?: "male" | "female";
   size?: "small" | "medium" | "big";
@@ -50,6 +50,7 @@ type RegisterAnimalFormValue = {
 
 const registerAnimalFormInitialValues: RegisterAnimalFormValue = {
   name: "",
+  imageUri: undefined,
   species: undefined,
   sex: undefined,
   size: undefined,
@@ -96,6 +97,7 @@ export function RegisterAnimalScreen() {
         ? formValue.adoptionRequirements.postAdoptionFollowupTime
         : null;
       if (
+        !formValue.imageUri ||
         postAdoptionFollowup === undefined ||
         !formValue.species ||
         !formValue.sex ||
@@ -106,6 +108,7 @@ export function RegisterAnimalScreen() {
       }
       const result = await registerAnimalUsecase.registerAnimal({
         name: formValue.name,
+        imageUri: formValue.imageUri,
         species: formValue.species,
         sex: formValue.sex,
         size: formValue.size,
@@ -184,17 +187,14 @@ export function RegisterAnimalScreen() {
               />
             </View>
             <View style={styles.formField}>
-              <Text style={styles.fieldLabel}>FOTOS DO ANIMAL</Text>
-              <Card
-                style={styles.imageInputContainer}
-                contentStyle={styles.imageInputContent}
-              >
-                <Icon
-                  name="plus-circle-outline"
-                  style={styles.imageInputIcon}
-                />
-                <Text style={styles.imageInputText}>adicionar fotos</Text>
-              </Card>
+              <Text style={[styles.fieldLabel, styles.marginBottom8]}>
+                FOTO DO ANIMAL
+              </Text>
+              <ImageInput
+                value={values.imageUri ?? null}
+                onChangeValue={(uri) => setFieldValue("imageUri", uri)}
+                aspect={[1, 1]}
+              />
             </View>
             <View style={styles.formField}>
               <Text style={styles.fieldLabel}>ESPÉCIE</Text>
@@ -658,22 +658,6 @@ const createStyles = (theme: MD3Theme) =>
       backgroundColor: "transparent",
       fontHeight: 14,
     },
-    imageInputContainer: {
-      backgroundColor: theme.colors.surface,
-      marginTop: 8,
-    },
-    imageInputContent: {
-      paddingVertical: 48,
-      alignItems: "center",
-    },
-    imageInputIcon: {
-      fontSize: 24,
-      color: theme.colors.onSurface,
-    },
-    imageInputText: {
-      color: theme.colors.onSurface,
-      fontSize: 14,
-    },
     radioButtonGroup: {
       marginTop: 16,
       flexDirection: "row",
@@ -704,5 +688,8 @@ const createStyles = (theme: MD3Theme) =>
     },
     buttonContainer: {
       marginTop: 24,
+    },
+    marginBottom8: {
+      marginBottom: 8,
     },
   });

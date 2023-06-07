@@ -1,6 +1,7 @@
 import { SafeAreaView } from "react-native";
 import { CoreLayer } from "../../core-layer";
 import { CoreLayerProvider } from "../contexts/CoreLayerContext";
+import { UserProvider } from "../contexts/UserContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import { LoginScreen, SignUpScreen } from "../screens";
 import { StyleSheet } from "react-native";
@@ -18,25 +19,27 @@ export type AppProps = {
 export function App({ coreLayer }: AppProps) {
   return (
     <CoreLayerProvider coreLayer={coreLayer}>
-      <NavigationContainer>
-        <SafeAreaView style={styles.safeArea}>
-          <ThemeProvider>
-            <Stack.Navigator
-              initialRouteName="Introduction"
-              screenOptions={{ headerShown: false }}
-            >
-              <Stack.Screen
-                name="Introduction"
-                component={IntroductionScreen}
-              />
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Ops" component={OopsScreen} />
-              <Stack.Screen name="RegAnim" component={RegisterAnimalScreen} />
-              <Stack.Screen name="RegUser" component={SignUpScreen} />
-            </Stack.Navigator>
-          </ThemeProvider>
-        </SafeAreaView>
-      </NavigationContainer>
+      <UserProvider>
+        <NavigationContainer>
+          <SafeAreaView style={styles.safeArea}>
+            <ThemeProvider>
+              <Stack.Navigator
+                initialRouteName="Introduction"
+                screenOptions={{ headerShown: false }}
+              >
+                <Stack.Screen
+                  name="Introduction"
+                  component={IntroductionScreen}
+                />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Ops" component={OopsScreen} />
+                <Stack.Screen name="RegAnim" component={RegisterAnimalScreen} />
+                <Stack.Screen name="RegUser" component={SignUpScreen} />
+              </Stack.Navigator>
+            </ThemeProvider>
+          </SafeAreaView>
+        </NavigationContainer>
+      </UserProvider>
     </CoreLayerProvider>
   );
 }
@@ -44,7 +47,6 @@ export function App({ coreLayer }: AppProps) {
 const Stack = createNativeStackNavigator<StackNavigationParamList>();
 const styles = StyleSheet.create({
   safeArea: {
-    height: "100%",
-    overflow: "hidden",
+    flexGrow: 1,
   },
 });
