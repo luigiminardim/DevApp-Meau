@@ -11,11 +11,18 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
+    "assetBundlePatterns": ["**/*"],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app access your photos."
+        }
+      ]
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesIcloudStorage": true
     },
     "android": {
       "adaptiveIcon": {

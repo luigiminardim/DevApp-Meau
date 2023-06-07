@@ -1,10 +1,21 @@
+import { Auth as FirebaseAuth } from "firebase/auth";
 import { Firestore } from "firebase/firestore";
-import { SignUpGate } from "./gates/signUpGate";
+import { SignUpGate } from "./gates/SignUpGate";
+import { LoginGate } from "./gates/LoginGate";
+import { FirebaseStorage } from "firebase/storage";
+import { UserBuilder } from "./gates/utils/UserBuilder";
 
 export class FirebaseUserModule {
   signUpGate: SignUpGate;
+  loginGate: LoginGate;
 
-  constructor(firebaseDb: Firestore) {
-    this.signUpGate = new SignUpGate(firebaseDb);
+  constructor(
+    firebaseAuth: FirebaseAuth,
+    firebaseDb: Firestore,
+    firebaseStorage: FirebaseStorage
+  ) {
+    const userBuilder = new UserBuilder(firebaseStorage);
+    this.signUpGate = new SignUpGate(firebaseAuth, firebaseDb, firebaseStorage);
+    this.loginGate = new LoginGate(firebaseAuth, firebaseDb, userBuilder);
   }
 }
