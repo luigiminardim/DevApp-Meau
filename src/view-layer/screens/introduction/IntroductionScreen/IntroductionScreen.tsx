@@ -42,6 +42,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
+            onPress={() => navigation.navigate("RegAnim")} //TODO: Remover essa navegação
           >
             Ajudar
           </Button>
@@ -60,7 +61,9 @@ export function IntroductionScreen({ navigation }: StackProps) {
             mode="text"
             compact
             uppercase={false}
-            onPress={() => navigation.navigate("Login")}
+            onPress={() =>
+              navigation.navigate("Login", { fwdTo: "Introduction" })
+            }
           >
             login
           </Button>

@@ -35,7 +35,7 @@ export function LoginScreen({ navigation }: StackProps) {
         setSnackMessage("Não foi possível fazer login.");
       else {
         setSnackMessage("Sucesso");
-        navigation.navigate("RegAnim");
+        navigation.navigate("RegAnim"); //TODO: navegar para o parametro recebido
       }
     },
     [loginUsecase, navigation]
