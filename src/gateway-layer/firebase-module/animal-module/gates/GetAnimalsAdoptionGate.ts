@@ -4,11 +4,11 @@ import {
   query,
   where,
   getDocs,
-  DocumentData,
 } from "firebase/firestore";
 import { GetAnimalsAdoptionUsecase } from "../../../../core-layer/animal-module/use-cases/GetAnimalsAdoptionUsecase";
 import { AnimalBuilder } from "./utils/AnimalBuilder";
 import { AnimalData } from "./dto/AnimalData";
+import { Animal } from "../../../../core-layer/animal-module/entities/Animal";
 
 export class GetAnimalsAdoptionGate implements GetAnimalsAdoptionUsecase {
   constructor(
@@ -22,12 +22,11 @@ export class GetAnimalsAdoptionGate implements GetAnimalsAdoptionUsecase {
         const animalsRef = collection(this.firebaseDb, "animals");
         const animalsQuery = query(animalsRef, where("avaible", "==", true));
         const querySnapshot = await getDocs(animalsQuery);
-        const animalsDoc = [] as DocumentData[];
-        querySnapshot.forEach((doc) => animalsDoc.push(doc.data));
-        const animalsForAdoption = [];
-        for (let i = 0; i < animalsDoc.length - 1; i++) {
+        const animalsForAdoption: Animal[] = [];
+        for (const snapshot of querySnapshot.docs) {
           let animal = await this.animalBuilder.buildAnimalFromData(
-            animalsDoc[i] as AnimalData
+            snapshot.id,
+            snapshot.data() as AnimalData
           );
           animalsForAdoption.push(animal);
         }

@@ -1,9 +1,9 @@
 import { LoginUsecase } from "./use-cases/LoginUsecase";
 import { SignUpUsecase } from "./use-cases/SignUpUsecase";
 
-export { LoginUsecase };
+export type { LoginUsecase };
 
-export { SignUpUsecase };
+export type { SignUpUsecase };
 
 export class UserModule {
   constructor(

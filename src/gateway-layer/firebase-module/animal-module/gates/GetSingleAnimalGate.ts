@@ -1,11 +1,4 @@
-import {
-  Firestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  DocumentData,
-} from "firebase/firestore";
+import { Firestore, doc, getDoc } from "firebase/firestore";
 import { GetSingleAnimalUsecase } from "../../../../core-layer/animal-module/use-cases/GetSingleAnimalUsecase";
 import { AnimalBuilder } from "./utils/AnimalBuilder";
 import { AnimalData } from "./dto/AnimalData";
@@ -20,14 +13,12 @@ export class GetSingleAnimalGate implements GetSingleAnimalUsecase {
   ) => {
     const id = param.animalId;
     try {
-      const animalsRef = collection(this.firebaseDb, "animals");
-      const animalQuery = query(animalsRef, where("id", "==", id));
-      const querySnapshot = await getDocs(animalQuery);
-      const animalDocs = [] as DocumentData[];
-      querySnapshot.forEach((doc) => animalDocs.push(doc.data));
-      const animalDoc = animalDocs[0];
+      const docRef = doc(this.firebaseDb, "animals", id);
+      const animalSnapshot = await getDoc(docRef);
+      const animalDoc = animalSnapshot.data();
       if (!animalDoc) return { type: "error", error: "Animal not found" };
       const animal = await this.animalBuilder.buildAnimalFromData(
+        animalSnapshot.id,
         animalDoc as AnimalData
       );
       return { type: "success", animal };
