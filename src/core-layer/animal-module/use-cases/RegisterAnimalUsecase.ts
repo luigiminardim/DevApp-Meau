@@ -29,7 +29,6 @@ export type RegisterAnimalParam = {
     postAdoptionFollowup: null | "1-month" | "3-months" | "6-months";
   };
   commentary: string;
-  avaible: boolean;
 };
 
 export interface RegisterAnimalUsecase {

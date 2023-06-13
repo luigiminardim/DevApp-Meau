@@ -142,7 +142,6 @@ export function RegisterAnimalScreen() {
           postAdoptionFollowup,
         },
         commentary: formValue.commentary,
-        avaible: true,
       });
       if (result.type === "error") {
         setSnackbarMessage("Erro ao registrar animal:" + result.error);
