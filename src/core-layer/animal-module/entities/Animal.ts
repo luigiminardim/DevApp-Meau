@@ -1,4 +1,5 @@
-export type RegisterAnimalParam = {
+export type Animal = {
+  id: string;
   donorId: string;
   name: string;
   imageUri: string;
@@ -26,16 +27,8 @@ export type RegisterAnimalParam = {
     terms: boolean;
     homePhotos: boolean;
     animalPreviousVisit: boolean;
-    postAdoptionFollowup: null | "1-month" | "3-months" | "6-months";
+    postAdoptionFollowup: "null" | "1-month" | "3-months" | "6-months";
   };
   commentary: string;
   avaible: boolean;
 };
-
-export interface RegisterAnimalUsecase {
-  registerAnimal(
-    param: RegisterAnimalParam
-  ): Promise<
-    { type: "success"; animalId: string } | { type: "error"; error: string }
-  >;
-}
