@@ -20,6 +20,7 @@ export class RegisterAnimalGate implements RegisterAnimalUsecase {
         ? "null"
         : param.adoptionRequirements.postAdoptionFollowup;
     return {
+      donorId: param.donorId,
       name: param.name,
       species: param.species,
       sex: param.sex,
@@ -48,6 +49,7 @@ export class RegisterAnimalGate implements RegisterAnimalUsecase {
         postAdoptionFollowup,
       },
       commentary: param.commentary,
+      avaible: true,
     };
   }
 

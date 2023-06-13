@@ -13,6 +13,7 @@ import {
 import { useCallback, useMemo, useState } from "react";
 import { Formik } from "formik";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { ImageInput } from "../../shared/components/ImageInput";
 
 type RegisterAnimalFormValue = {
@@ -90,6 +91,9 @@ export function RegisterAnimalScreen() {
   const {
     animalModule: { registerAnimalUsecase },
   } = useCoreLayer();
+
+  const { user } = useUserContext();
+  console.log(user);
   const onSubmit = useCallback(
     async (formValue: RegisterAnimalFormValue) => {
       const postAdoptionFollowup = formValue.adoptionRequirements
@@ -107,6 +111,7 @@ export function RegisterAnimalScreen() {
         return;
       }
       const result = await registerAnimalUsecase.registerAnimal({
+        donorId: user.id,
         name: formValue.name,
         imageUri: formValue.imageUri,
         species: formValue.species,
@@ -137,6 +142,7 @@ export function RegisterAnimalScreen() {
           postAdoptionFollowup,
         },
         commentary: formValue.commentary,
+        avaible: true,
       });
       if (result.type === "error") {
         setSnackbarMessage("Erro ao registrar animal:" + result.error);
@@ -144,7 +150,7 @@ export function RegisterAnimalScreen() {
         setSnackbarMessage("Animal registrado com sucesso!");
       }
     },
-    [registerAnimalUsecase]
+    [registerAnimalUsecase, user.id]
   );
 
   return (

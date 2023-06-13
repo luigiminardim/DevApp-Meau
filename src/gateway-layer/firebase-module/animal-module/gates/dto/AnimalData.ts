@@ -1,5 +1,6 @@
 export type AnimalData = {
   id: string;
+  donorId: string;
   name: string;
   imageUri: string;
   species: "dog" | "cat";
@@ -29,4 +30,5 @@ export type AnimalData = {
     postAdoptionFollowup: "null" | "1-month" | "3-months" | "6-months";
   };
   commentary: string;
+  avaible: boolean;
 };
