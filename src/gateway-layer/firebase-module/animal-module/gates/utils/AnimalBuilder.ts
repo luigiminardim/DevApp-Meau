@@ -5,11 +5,11 @@ import { AnimalData } from "../dto/AnimalData";
 export class AnimalBuilder {
   constructor(private firebaseStorage: FirebaseStorage) {}
 
-  async buildAnimalFromData(data: AnimalData): Promise<Animal> {
-    const imageRef = ref(this.firebaseStorage, `animals/image/${data.id}`);
+  async buildAnimalFromData(id: string, data: AnimalData): Promise<Animal> {
+    const imageRef = ref(this.firebaseStorage, `animals/image/${id}`);
     const imageUri = await getDownloadURL(imageRef);
     return {
-      id: data.id,
+      id,
       donorId: data.donorId,
       name: data.name,
       imageUri: imageUri,

@@ -2,9 +2,10 @@ import { View, StyleSheet, Image } from "react-native";
 import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
+import { useCoreLayer } from "../../../contexts/CoreLayerContext";
 
 type StackProps = NativeStackScreenProps<
   StackNavigationParamList,
@@ -12,6 +13,17 @@ type StackProps = NativeStackScreenProps<
 >;
 
 export function IntroductionScreen({ navigation }: StackProps) {
+  const {
+    animalModule: { getAnimalsAdoptionUsecase, getSingleAnimalUsecase },
+  } = useCoreLayer();
+
+  useEffect(() => {
+    getAnimalsAdoptionUsecase.queryAnimalsForAdoption().then(console.log);
+    getSingleAnimalUsecase
+      .querySingleAnimal({ animalId: "uXsIn4BuTdVfPfwp7N2B" })
+      .then(console.log);
+  }, [getAnimalsAdoptionUsecase, getSingleAnimalUsecase]);
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (

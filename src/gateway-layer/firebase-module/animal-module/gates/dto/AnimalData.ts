@@ -1,5 +1,4 @@
 export type AnimalData = {
-  id: string;
   donorId: string;
   name: string;
   imageUri: string;
