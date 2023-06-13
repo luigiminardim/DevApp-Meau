@@ -33,7 +33,8 @@ export function Appbar(props: AppbarProps) {
       {leftAction === "menu" ? (
         <PaperAppbar.Action icon="menu" color={styles.content.color} />
       ) : (
-        <PaperAppbar.Action icon="arrow-left" color={styles.content.color} />
+        //TODO: Implementar navigation.goBack sem quebrar o navigator inteiro
+        <PaperAppbar.BackAction color={styles.content.color} />
       )}
       <PaperAppbar.Content title={title} color={styles.content.color} />
     </PaperAppbar.Header>

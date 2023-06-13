@@ -3,8 +3,15 @@ import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
 import { useMemo } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
 
-export function IntroductionScreen() {
+type StackProps = NativeStackScreenProps<
+  StackNavigationParamList,
+  "Introduction"
+>;
+
+export function IntroductionScreen({ navigation }: StackProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
@@ -35,6 +42,7 @@ export function IntroductionScreen() {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
+            onPress={() => navigation.navigate("RegAnim")} //TODO: Remover essa navegação
           >
             Ajudar
           </Button>
@@ -44,6 +52,7 @@ export function IntroductionScreen() {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
+            onPress={() => navigation.navigate("Ops")}
           >
             Cadastrar Animal
           </Button>
@@ -52,6 +61,9 @@ export function IntroductionScreen() {
             mode="text"
             compact
             uppercase={false}
+            onPress={() =>
+              navigation.navigate("Login", { fwdTo: "Introduction" })
+            }
           >
             login
           </Button>

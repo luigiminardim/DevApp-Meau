@@ -2,8 +2,12 @@ import { View, StyleSheet } from "react-native";
 import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import { useMemo } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
 
-export function OopsScreen() {
+type StackProps = NativeStackScreenProps<StackNavigationParamList, "Ops">;
+
+export function OopsScreen({ navigation }: StackProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
@@ -21,6 +25,7 @@ export function OopsScreen() {
             compact
             buttonColor={theme.colors.primary}
             textColor={theme.colors.onPrimary}
+            onPress={() => navigation.navigate("RegUser")}
           >
             Fazer cadastro
           </Button>
@@ -33,6 +38,9 @@ export function OopsScreen() {
             compact
             buttonColor={theme.colors.primary}
             textColor={theme.colors.onPrimary}
+            onPress={() =>
+              navigation.navigate("Login", { fwdTo: "Introduction" })
+            }
           >
             Fazer login
           </Button>
