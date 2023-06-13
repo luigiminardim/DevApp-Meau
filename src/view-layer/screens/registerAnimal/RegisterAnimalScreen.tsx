@@ -93,7 +93,6 @@ export function RegisterAnimalScreen() {
   } = useCoreLayer();
 
   const { user } = useUserContext();
-  console.log(user);
   const onSubmit = useCallback(
     async (formValue: RegisterAnimalFormValue) => {
       const postAdoptionFollowup = formValue.adoptionRequirements
@@ -106,7 +105,8 @@ export function RegisterAnimalScreen() {
         !formValue.species ||
         !formValue.sex ||
         !formValue.size ||
-        !formValue.age
+        !formValue.age ||
+        !user
       ) {
         return;
       }
@@ -150,7 +150,7 @@ export function RegisterAnimalScreen() {
         setSnackbarMessage("Animal registrado com sucesso!");
       }
     },
-    [registerAnimalUsecase, user.id]
+    [registerAnimalUsecase, user]
   );
 
   return (
