@@ -689,7 +689,6 @@ const createStyles = (theme: MD3Theme) =>
     checkboxButtonContainer: {
       flexDirection: "row",
       alignItems: "center",
-      flexBasis: "33%",
     },
     buttonContainer: {
       marginTop: 24,
