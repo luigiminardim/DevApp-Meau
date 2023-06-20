@@ -1,11 +1,11 @@
 import { View, StyleSheet, Image } from "react-native";
-import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
 import { useEffect, useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
 import { useCoreLayer } from "../../../contexts/CoreLayerContext";
+import { ScreenLayout } from "../../../shared/components/ScreenLayout/ScreenLayout";
 
 type StackProps = NativeStackScreenProps<
   StackNavigationParamList,
@@ -26,9 +26,9 @@ export function IntroductionScreen({ navigation }: StackProps) {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+
   return (
-    <>
-      <Appbar title="" colorScheme="transparent" />
+    <ScreenLayout appBarProps={{ title: "", colorScheme: "transparent" }}>
       <View style={styles.container}>
         <Text style={styles.title}>Olá!</Text>
         <View style={styles.subtitleContainer}>
@@ -82,7 +82,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
         </View>
         <Image source={LogoSrc} style={styles.logoImage} />
       </View>
-    </>
+    </ScreenLayout>
   );
 }
 
