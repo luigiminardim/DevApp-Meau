@@ -1,5 +1,4 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Appbar } from "../../shared/components/Appbar";
 import {
   Button,
   Checkbox,
@@ -15,6 +14,7 @@ import { Formik } from "formik";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { useUserContext } from "../../contexts/UserContext";
 import { ImageInput } from "../../shared/components/ImageInput";
+import { ScreenLayout } from "../../shared/components/ScreenLayout";
 
 type RegisterAnimalFormValue = {
   name: string;
@@ -153,12 +153,13 @@ export function RegisterAnimalScreen() {
   );
 
   return (
-    <>
-      <Appbar
-        title="Cadastro do Animal"
-        colorScheme="secondary-container"
-        leftAction="back"
-      />
+    <ScreenLayout
+      appBarProps={{
+        title: "Cadastro do Animal",
+        colorScheme: "secondary-container",
+        leftAction: "back",
+      }}
+    >
       <Formik
         initialValues={registerAnimalFormInitialValues}
         onSubmit={onSubmit}
@@ -634,7 +635,7 @@ export function RegisterAnimalScreen() {
       >
         {snackbarMessage}
       </Snackbar>
-    </>
+    </ScreenLayout>
   );
 }
 

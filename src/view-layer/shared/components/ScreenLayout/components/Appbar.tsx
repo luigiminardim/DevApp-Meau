@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { useMemo } from "react";
 import { StatusBar } from "react-native";
 import { StyleSheet } from "react-native";
@@ -17,10 +18,15 @@ type AppbarProps = {
    * @default "menu"
    */
   leftAction?: "menu" | "back";
+
+  onDrawerOpen: () => void;
 };
 
 export function Appbar(props: AppbarProps) {
-  const { title, leftAction = "menu" } = props;
+  const { title, leftAction = "menu", onDrawerOpen } = props;
+
+  const navigation = useNavigation();
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme, props), [theme, props]);
 
@@ -31,10 +37,16 @@ export function Appbar(props: AppbarProps) {
         backgroundColor={styles.statusbar.backgroundColor}
       />
       {leftAction === "menu" ? (
-        <PaperAppbar.Action icon="menu" color={styles.content.color} />
+        <PaperAppbar.Action
+          icon="menu"
+          color={styles.content.color}
+          onPress={onDrawerOpen}
+        />
       ) : (
-        //TODO: Implementar navigation.goBack sem quebrar o navigator inteiro
-        <PaperAppbar.BackAction color={styles.content.color} />
+        <PaperAppbar.BackAction
+          color={styles.content.color}
+          onPress={navigation.goBack}
+        />
       )}
       <PaperAppbar.Content title={title} color={styles.content.color} />
     </PaperAppbar.Header>

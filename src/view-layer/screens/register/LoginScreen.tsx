@@ -1,12 +1,12 @@
 import { View, StyleSheet } from "react-native";
 import { Button, Snackbar, TextInput, useTheme } from "react-native-paper";
-import { Appbar } from "../../shared/components/Appbar";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../App/shared/NavigationProps";
 import { useUserContext } from "../../contexts/UserContext";
+import { ScreenLayout } from "../../shared/components/ScreenLayout";
 
 type LoginFormValue = {
   username: string;
@@ -44,8 +44,11 @@ export function LoginScreen({ navigation }: StackProps) {
   );
 
   return (
-    <>
-      <Appbar title="Login" />
+    <ScreenLayout
+      appBarProps={{
+        title: "Login",
+      }}
+    >
       <Formik onSubmit={onSubmit} initialValues={initialValues}>
         {({
           handleChange,
@@ -127,7 +130,7 @@ export function LoginScreen({ navigation }: StackProps) {
       >
         {snackMessage}
       </Snackbar>
-    </>
+    </ScreenLayout>
   );
 }
 

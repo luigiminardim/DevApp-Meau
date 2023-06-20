@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
-import { Appbar } from "../../../shared/components/Appbar";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import { useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
+import { ScreenLayout } from "../../../shared/components/ScreenLayout";
 
 type StackProps = NativeStackScreenProps<StackNavigationParamList, "Ops">;
 
@@ -11,8 +11,7 @@ export function OopsScreen({ navigation }: StackProps) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
-    <>
-      <Appbar title="Cadastro" />
+    <ScreenLayout appBarProps={{ title: "Cadastro" }}>
       <View style={styles.container}>
         <Text style={styles.title}>Ops!</Text>
         <View style={styles.subtitleContainer}>
@@ -46,7 +45,7 @@ export function OopsScreen({ navigation }: StackProps) {
           </Button>
         </View>
       </View>
-    </>
+    </ScreenLayout>
   );
 }
 

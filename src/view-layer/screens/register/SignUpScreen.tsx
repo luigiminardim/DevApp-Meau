@@ -7,12 +7,12 @@ import {
   Button,
   Snackbar,
 } from "react-native-paper";
-import { Appbar } from "../../shared/components/Appbar";
 import { useMemo } from "react";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { ImageInput } from "../../shared/components/ImageInput";
+import { ScreenLayout } from "../../shared/components/ScreenLayout";
 
 type SignUpFormValue = {
   name: string;
@@ -69,8 +69,11 @@ export function SignUpScreen() {
 
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
-    <>
-      <Appbar title="Cadastro Pessoal" />
+    <ScreenLayout
+      appBarProps={{
+        title: "Cadastro Pessoal",
+      }}
+    >
       <Formik onSubmit={onSubmit} initialValues={initialValues}>
         {({ handleChange, handleBlur, values, submitForm, isSubmitting }) => (
           <ScrollView>
@@ -195,7 +198,7 @@ export function SignUpScreen() {
       >
         {snackMessage}
       </Snackbar>
-    </>
+    </ScreenLayout>
   );
 }
 

@@ -1,3 +1,8 @@
+// See https://reactnavigation.org/docs/drawer-layout#installation
+// to see how to install react - native - drawer - layout and verify why to
+// import "react-native-gesture-handler" this way.
+import "react-native-gesture-handler";
+
 import { CoreLayer } from "../../core-layer";
 import { CoreLayerProvider } from "../contexts/CoreLayerContext";
 import { UserProvider } from "../contexts/UserContext";
