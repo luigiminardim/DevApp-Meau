@@ -54,7 +54,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
-            onPress={() => navigation.navigate("RegAnim")} //TODO: Remover essa navegação
+            onPress={() => navigation.navigate("RegisterAnimal")} //TODO: Remover essa navegação
           >
             Ajudar
           </Button>
@@ -64,7 +64,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
-            onPress={() => navigation.navigate("Ops")}
+            onPress={() => navigation.navigate("Oops")}
           >
             Cadastrar Animal
           </Button>

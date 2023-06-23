@@ -38,7 +38,7 @@ export function LoginScreen({ navigation }: StackProps) {
       }
       setUser(result.user);
       setSnackMessage("Sucesso");
-      navigation.navigate("RegAnim"); //TODO: navegar para o parametro recebido
+      navigation.navigate("RegisterAnimal"); //TODO: navegar para o parametro recebido
     },
     [loginUsecase, setUser, navigation]
   );
