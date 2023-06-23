@@ -34,9 +34,12 @@ export function App({ coreLayer }: AppProps) {
                 component={IntroductionScreen}
               />
               <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Ops" component={OopsScreen} />
-              <Stack.Screen name="RegAnim" component={RegisterAnimalScreen} />
-              <Stack.Screen name="RegUser" component={SignUpScreen} />
+              <Stack.Screen name="Oops" component={OopsScreen} />
+              <Stack.Screen
+                name="RegisterAnimal"
+                component={RegisterAnimalScreen}
+              />
+              <Stack.Screen name="SignUp" component={SignUpScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </ThemeProvider>

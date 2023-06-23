@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
 import { ScreenLayout } from "../../../shared/components/ScreenLayout";
 
-type StackProps = NativeStackScreenProps<StackNavigationParamList, "Ops">;
+type StackProps = NativeStackScreenProps<StackNavigationParamList, "Oops">;
 
 export function OopsScreen({ navigation }: StackProps) {
   const theme = useTheme();
@@ -24,7 +24,7 @@ export function OopsScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.primary}
             textColor={theme.colors.onPrimary}
-            onPress={() => navigation.navigate("RegUser")}
+            onPress={() => navigation.navigate("SignUp")}
           >
             Fazer cadastro
           </Button>
