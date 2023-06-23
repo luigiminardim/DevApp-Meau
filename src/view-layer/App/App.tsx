@@ -13,7 +13,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 import { IntroductionScreen } from "../screens/introduction";
 import { RegisterAnimalScreen } from "../screens/registerAnimal";
-import { StackNavigationParamList } from "./shared/NavigationProps";
+import { StackNavigationParamList } from "../shared/StackNavigationParamList";
 
 export type AppProps = {
   coreLayer: CoreLayer;

@@ -15,6 +15,7 @@ import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { useUserContext } from "../../contexts/UserContext";
 import { ImageInput } from "../../shared/components/ImageInput";
 import { ScreenLayout } from "../../shared/components/ScreenLayout";
+import { useRequireLoggedUser } from "../../shared/hooks/useRequireLoggedUser";
 
 type RegisterAnimalFormValue = {
   name: string;
@@ -83,6 +84,8 @@ const registerAnimalFormInitialValues: RegisterAnimalFormValue = {
 };
 
 export function RegisterAnimalScreen() {
+  useRequireLoggedUser();
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 

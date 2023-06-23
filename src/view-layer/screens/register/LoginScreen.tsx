@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { StackNavigationParamList } from "../../App/shared/NavigationProps";
+import { StackNavigationParamList } from "../../shared/StackNavigationParamList";
 import { useUserContext } from "../../contexts/UserContext";
 import { ScreenLayout } from "../../shared/components/ScreenLayout";
 
@@ -21,6 +21,7 @@ const initialValues: LoginFormValue = {
 
 export function LoginScreen({ navigation }: StackProps) {
   const theme = useTheme();
+
   const { setUser } = useUserContext();
   const [snackMessage, setSnackMessage] = useState(null as string | null);
   const {
@@ -38,7 +39,7 @@ export function LoginScreen({ navigation }: StackProps) {
       }
       setUser(result.user);
       setSnackMessage("Sucesso");
-      navigation.navigate("RegisterAnimal"); //TODO: navegar para o parametro recebido
+      navigation.goBack();
     },
     [loginUsecase, setUser, navigation]
   );

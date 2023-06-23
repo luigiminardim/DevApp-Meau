@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Drawer as DrawerLayout } from "react-native-drawer-layout";
 import { Avatar, Button, List, MD3Theme, useTheme } from "react-native-paper";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { useNavigation } from "../../../StackNavigationParamList";
 
 type MenuDrawerProps = PropsWithChildren<{
   onOpen: () => void;
@@ -20,6 +21,8 @@ export function MenuDrawer({
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const { user } = useUserContext();
+
+  const navigation = useNavigation();
 
   return (
     <DrawerLayout
@@ -57,7 +60,10 @@ export function MenuDrawer({
               style={styles.shortcutAccordionHeader}
               titleStyle={styles.shortcutAccordionHeaderTitle}
             >
-              <List.Item title="Cadastrar um pet" />
+              <List.Item
+                title="Cadastrar um pet"
+                onPress={() => navigation.navigate("RegisterAnimal")}
+              />
               <List.Item title="Adotar um pet" />
             </List.Accordion>
           )}
@@ -93,6 +99,7 @@ export function MenuDrawer({
               style={styles.singoutButton}
               buttonColor={theme.colors.primary}
               textColor={theme.colors.onPrimary}
+              onPress={() => navigation.navigate("Login")}
             >
               Entrar
             </Button>

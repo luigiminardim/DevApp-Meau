@@ -3,7 +3,7 @@ import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
 import { useEffect, useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
+import { StackNavigationParamList } from "../../../shared/StackNavigationParamList";
 import { useCoreLayer } from "../../../contexts/CoreLayerContext";
 import { ScreenLayout } from "../../../shared/components/ScreenLayout/ScreenLayout";
 
@@ -54,7 +54,6 @@ export function IntroductionScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
-            onPress={() => navigation.navigate("RegisterAnimal")} //TODO: Remover essa navegação
           >
             Ajudar
           </Button>
@@ -64,7 +63,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
-            onPress={() => navigation.navigate("Oops")}
+            onPress={() => navigation.navigate("RegisterAnimal")}
           >
             Cadastrar Animal
           </Button>
@@ -73,9 +72,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
             mode="text"
             compact
             uppercase={false}
-            onPress={() =>
-              navigation.navigate("Login", { fwdTo: "Introduction" })
-            }
+            onPress={() => navigation.navigate("Login")}
           >
             login
           </Button>
