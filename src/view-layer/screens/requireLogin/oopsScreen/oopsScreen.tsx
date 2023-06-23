@@ -2,12 +2,15 @@ import { View, StyleSheet } from "react-native";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import { useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { StackNavigationParamList } from "../../../App/shared/NavigationProps";
+import { StackNavigationParamList } from "../../../shared/StackNavigationParamList";
 import { ScreenLayout } from "../../../shared/components/ScreenLayout";
+import { useGoBackIfUserLogged } from "./hooks/useGoBackIfUserLogged";
 
 type StackProps = NativeStackScreenProps<StackNavigationParamList, "Oops">;
 
 export function OopsScreen({ navigation }: StackProps) {
+  useGoBackIfUserLogged();
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
@@ -37,9 +40,7 @@ export function OopsScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.primary}
             textColor={theme.colors.onPrimary}
-            onPress={() =>
-              navigation.navigate("Login", { fwdTo: "Introduction" })
-            }
+            onPress={() => navigation.navigate("Login")}
           >
             Fazer login
           </Button>
