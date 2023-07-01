@@ -39,7 +39,6 @@ export function MenuDrawer({
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-
   return (
     <DrawerLayout
       open={isOpen}
