@@ -14,6 +14,8 @@ import { OopsScreen } from "../screens/requireLogin/oopsScreen";
 import { IntroductionScreen } from "../screens/introduction";
 import { RegisterAnimalScreen } from "../screens/registerAnimal";
 import { StackNavigationParamList } from "../shared/StackNavigationParamList";
+import { AllAnimalsScreen } from "../screens/AdoptAnimal/ViewAllAnimals/AllAnimalsScreen";
+import { SingleAnimalScreen } from "../screens/AdoptAnimal/ViewAnimal/SingleAnimalScreen";
 
 export type AppProps = {
   coreLayer: CoreLayer;
@@ -40,6 +42,11 @@ export function App({ coreLayer }: AppProps) {
                 component={RegisterAnimalScreen}
               />
               <Stack.Screen name="SignUp" component={SignUpScreen} />
+              <Stack.Screen name="AdoptionList" component={AllAnimalsScreen} />
+              <Stack.Screen
+                name="SingleAnimal"
+                component={SingleAnimalScreen}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </ThemeProvider>

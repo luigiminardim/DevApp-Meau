@@ -1,10 +1,9 @@
 import { View, StyleSheet, Image } from "react-native";
 import { Button, MD3Theme, Text, useTheme } from "react-native-paper";
 import LogoSrc from "./images/Meau_marca_2.png";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../../shared/StackNavigationParamList";
-import { useCoreLayer } from "../../../contexts/CoreLayerContext";
 import { ScreenLayout } from "../../../shared/components/ScreenLayout/ScreenLayout";
 
 type StackProps = NativeStackScreenProps<
@@ -13,17 +12,6 @@ type StackProps = NativeStackScreenProps<
 >;
 
 export function IntroductionScreen({ navigation }: StackProps) {
-  const {
-    animalModule: { getAnimalsAdoptionUsecase, getSingleAnimalUsecase },
-  } = useCoreLayer();
-
-  useEffect(() => {
-    getAnimalsAdoptionUsecase.queryAnimalsForAdoption().then(console.log);
-    getSingleAnimalUsecase
-      .querySingleAnimal({ animalId: "uXsIn4BuTdVfPfwp7N2B" })
-      .then(console.log);
-  }, [getAnimalsAdoptionUsecase, getSingleAnimalUsecase]);
-
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
@@ -45,6 +33,7 @@ export function IntroductionScreen({ navigation }: StackProps) {
             compact
             buttonColor={theme.colors.secondary}
             textColor={theme.colors.onSecondary}
+            onPress={() => navigation.navigate("AdoptionList")}
           >
             Adotar
           </Button>
