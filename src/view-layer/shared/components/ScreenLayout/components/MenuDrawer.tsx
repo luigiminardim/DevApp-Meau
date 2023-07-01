@@ -1,7 +1,8 @@
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Drawer as DrawerLayout } from "react-native-drawer-layout";
 import { Avatar, Button, List, MD3Theme, useTheme } from "react-native-paper";
+import { useCoreLayer } from "../../../../contexts/CoreLayerContext";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { useNavigation } from "../../../StackNavigationParamList";
 
@@ -17,13 +18,27 @@ export function MenuDrawer({
   isOpen,
   children,
 }: MenuDrawerProps) {
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
-
-  const { user } = useUserContext();
-
   const navigation = useNavigation();
 
+  const { user, setUser } = useUserContext();
+  const [isLoginout, setIsLoginout] = useState(false);
+  const {
+    userModule: { logoutUsecase },
+  } = useCoreLayer();
+  const onPressLogin = useCallback(() => {
+    navigation.navigate("Login");
+    onClose();
+  }, [navigation, onClose]);
+  const onLogout = useCallback(async () => {
+    setIsLoginout(true);
+    await logoutUsecase.logout();
+    setUser(null);
+    onClose();
+    setIsLoginout(false);
+  }, [logoutUsecase, onClose, setUser]);
+
+  const theme = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <DrawerLayout
       open={isOpen}
@@ -87,19 +102,21 @@ export function MenuDrawer({
           {user ? (
             <Button
               mode="contained"
-              style={styles.singoutButton}
+              contentStyle={styles.singoutButtonContainer}
               buttonColor={theme.colors.primary}
               textColor={theme.colors.onPrimary}
+              onPress={onLogout}
+              loading={isLoginout}
             >
               Sair
             </Button>
           ) : (
             <Button
               mode="contained"
-              style={styles.singoutButton}
+              contentStyle={styles.singoutButtonContainer}
               buttonColor={theme.colors.primary}
               textColor={theme.colors.onPrimary}
-              onPress={() => navigation.navigate("Login")}
+              onPress={onPressLogin}
             >
               Entrar
             </Button>
@@ -144,9 +161,8 @@ const createStyles = (theme: MD3Theme) =>
     spacer: {
       flexGrow: 1,
     },
-    singoutButton: {
+    singoutButtonContainer: {
       height: 48,
-      justifyContent: "center",
-      alignItems: "center",
+      width: "100%",
     },
   });
