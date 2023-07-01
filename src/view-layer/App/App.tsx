@@ -17,6 +17,7 @@ import { StackNavigationParamList } from "../shared/StackNavigationParamList";
 import { AllAnimalsScreen } from "../screens/AdoptAnimal/ViewAllAnimals/AllAnimalsScreen";
 import { SingleAnimalScreen } from "../screens/AdoptAnimal/ViewAnimal/SingleAnimalScreen";
 
+
 export type AppProps = {
   coreLayer: CoreLayer;
 };

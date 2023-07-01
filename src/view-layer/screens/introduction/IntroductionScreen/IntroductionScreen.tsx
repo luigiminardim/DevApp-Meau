@@ -4,6 +4,7 @@ import LogoSrc from "./images/Meau_marca_2.png";
 import { useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackNavigationParamList } from "../../../shared/StackNavigationParamList";
+import { useCoreLayer } from "../../../contexts/CoreLayerContext";
 import { ScreenLayout } from "../../../shared/components/ScreenLayout/ScreenLayout";
 
 type StackProps = NativeStackScreenProps<
