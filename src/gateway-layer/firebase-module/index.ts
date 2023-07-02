@@ -1,10 +1,12 @@
 import { firebaseAuth, firebaseDb, firebaseStorage } from "./firebaseConfig";
 import { FirebaseAnimalModule } from "./animal-module";
 import { FirebaseUserModule } from "./user-module";
+import { FirebaseAdoptionModule } from "./adoption-module";
 
 export class FirebaseModule {
   userModule: FirebaseUserModule;
   animalModule: FirebaseAnimalModule;
+  adoptionModule: FirebaseAdoptionModule;
 
   constructor() {
     this.animalModule = new FirebaseAnimalModule(firebaseDb, firebaseStorage);
@@ -13,5 +15,6 @@ export class FirebaseModule {
       firebaseDb,
       firebaseStorage
     );
+    this.adoptionModule = new FirebaseAdoptionModule(firebaseDb);
   }
 }

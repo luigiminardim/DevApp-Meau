@@ -9,13 +9,15 @@ const {
     getAnimalsAdoptionGate,
     getSingleAnimalGate,
   },
+  adoptionModule: { createAdoptionInterestGate },
 } = new FirebaseModule();
 const coreLayer = new CoreLayer(
   signUpGate,
   loginGate,
   registerAnimalGate,
   getSingleAnimalGate,
-  getAnimalsAdoptionGate
+  getAnimalsAdoptionGate,
+  createAdoptionInterestGate
 );
 
 export default function Main() {

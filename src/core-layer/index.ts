@@ -1,3 +1,4 @@
+import { AdoptionModule, CreateAdoptionInterestGate } from "./adoption-module";
 import {
   AnimalModule,
   GetSingleAnimalUsecase,
@@ -9,13 +10,15 @@ import { LoginUsecase, UserModule, SignUpUsecase } from "./user-module";
 export class CoreLayer {
   userModule: UserModule;
   animalModule: AnimalModule;
+  adoptionModule: AdoptionModule;
 
   constructor(
     signUpUsecase: SignUpUsecase,
     loginUsecase: LoginUsecase,
     registerAnimalUsecase: RegisterAnimalUsecase,
     getSingleAnimalUsecase: GetSingleAnimalUsecase,
-    getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase
+    getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase,
+    createAdoptionInterestGate: CreateAdoptionInterestGate
   ) {
     this.userModule = new UserModule(loginUsecase, signUpUsecase);
     this.animalModule = new AnimalModule(
@@ -23,5 +26,6 @@ export class CoreLayer {
       getSingleAnimalUsecase,
       getAnimalsAdoptionUsecase
     );
+    this.adoptionModule = new AdoptionModule(createAdoptionInterestGate);
   }
 }
