@@ -1,4 +1,4 @@
-import { LoginUsecase } from "../../../../core-layer/user-module";
+import { LoginGate } from "../../../../core-layer/user-module";
 import {
   signInWithEmailAndPassword,
   Auth as FirebaseAuth,
@@ -14,14 +14,14 @@ import {
 import { UserBuilder } from "./utils/UserBuilder";
 import { UserData } from "../dto/UserData";
 
-export class LoginGate implements LoginUsecase {
+export class FirebaseLoginGate implements LoginGate {
   constructor(
     private firebaseAuth: FirebaseAuth,
     private firebaseDb: Firestore,
     private userBuilder: UserBuilder
   ) {}
 
-  loginWithPassword: LoginUsecase["loginWithPassword"] = async (param) => {
+  loginWithPassword: LoginGate["loginWithPassword"] = async (param) => {
     try {
       const {
         user: { uid: id },

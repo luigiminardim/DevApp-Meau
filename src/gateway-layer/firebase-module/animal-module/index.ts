@@ -5,6 +5,8 @@ import { GetSingleAnimalGate } from "./gates/GetSingleAnimalGate";
 import { RegisterAnimalGate } from "./gates/RegisterAnimalGate";
 import { AnimalBuilder } from "./gates/utils/AnimalBuilder";
 
+export type { AnimalData } from "./gates/dto/AnimalData";
+
 export class FirebaseAnimalModule {
   registerAnimalGate: RegisterAnimalGate;
   getAnimalsAdoptionGate: GetAnimalsAdoptionGate;

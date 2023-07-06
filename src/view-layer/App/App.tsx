@@ -17,6 +17,8 @@ import { StackNavigationParamList } from "../shared/StackNavigationParamList";
 import { AllAnimalsScreen } from "../screens/AdoptAnimal/ViewAllAnimals/AllAnimalsScreen";
 import { SingleAnimalScreen } from "../screens/AdoptAnimal/ViewAnimal/SingleAnimalScreen";
 
+const Stack = createNativeStackNavigator<StackNavigationParamList>();
+
 export type AppProps = {
   coreLayer: CoreLayer;
 };
@@ -54,5 +56,3 @@ export function App({ coreLayer }: AppProps) {
     </CoreLayerProvider>
   );
 }
-
-const Stack = createNativeStackNavigator<StackNavigationParamList>();

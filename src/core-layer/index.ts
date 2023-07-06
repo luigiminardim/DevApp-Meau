@@ -1,11 +1,21 @@
-import { AdoptionModule, CreateAdoptionInterestGate } from "./adoption-module";
+import {
+  AdoptionModule,
+  CreateAdoptionInterestGate,
+  NotifyUserGate,
+} from "./adoption-module";
 import {
   AnimalModule,
   GetSingleAnimalUsecase,
   RegisterAnimalUsecase,
   GetAnimalsAdoptionUsecase,
 } from "./animal-module";
-import { LoginUsecase, UserModule, SignUpUsecase } from "./user-module";
+import {
+  LoginGate,
+  UserModule,
+  SignUpUsecase,
+  GetUserGate,
+} from "./user-module";
+import { SetNotificationTokenGate } from "./user-module";
 
 export class CoreLayer {
   userModule: UserModule;
@@ -14,18 +24,29 @@ export class CoreLayer {
 
   constructor(
     signUpUsecase: SignUpUsecase,
-    loginUsecase: LoginUsecase,
+    loginGate: LoginGate,
     registerAnimalUsecase: RegisterAnimalUsecase,
     getSingleAnimalUsecase: GetSingleAnimalUsecase,
     getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase,
-    createAdoptionInterestGate: CreateAdoptionInterestGate
+    createAdoptionInterestGate: CreateAdoptionInterestGate,
+    getUserGate: GetUserGate,
+    notifyAdoptionInterestGate: NotifyUserGate,
+    setNotificationtokenGate: SetNotificationTokenGate
   ) {
-    this.userModule = new UserModule(loginUsecase, signUpUsecase);
+    this.userModule = new UserModule(
+      loginGate,
+      signUpUsecase,
+      setNotificationtokenGate
+    );
     this.animalModule = new AnimalModule(
       registerAnimalUsecase,
       getSingleAnimalUsecase,
       getAnimalsAdoptionUsecase
     );
-    this.adoptionModule = new AdoptionModule(createAdoptionInterestGate);
+    this.adoptionModule = new AdoptionModule(
+      createAdoptionInterestGate,
+      getUserGate,
+      notifyAdoptionInterestGate
+    );
   }
 }
