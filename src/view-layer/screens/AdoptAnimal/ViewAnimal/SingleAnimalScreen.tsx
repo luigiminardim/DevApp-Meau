@@ -9,12 +9,15 @@ import {
   Text,
   useTheme,
 } from "react-native-paper";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { StyleSheet, Image, View } from "react-native";
 import { useCoreLayer } from "../../../contexts/CoreLayerContext";
 import { Animal } from "../../../../core-layer/animal-module/entities/Animal";
 import { ScrollView } from "react-native";
 import AnimalPrettyPrint from "../../../shared/AnimalPrettyPrint";
+import { useCreateAdoptionInterestMutation } from "./hooks/useCreateAdoptionInterestMutation";
+import { useUserContext } from "../../../contexts/UserContext";
+import { useRequireLoggedUser } from "../../../shared/hooks/useRequireLoggedUser";
 
 type StackProps = NativeStackScreenProps<
   StackNavigationParamList,
@@ -22,6 +25,8 @@ type StackProps = NativeStackScreenProps<
 >;
 
 export function SingleAnimalScreen({ route }: StackProps) {
+  useRequireLoggedUser();
+
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { id } = route.params;
@@ -36,6 +41,16 @@ export function SingleAnimalScreen({ route }: StackProps) {
       }
     });
   }, [getSingleAnimalUsecase, id]);
+
+  const { user } = useUserContext();
+  const createAdoptionInterestMutation = useCreateAdoptionInterestMutation();
+  const onAdoptAnimal = useCallback(() => {
+    if (!user || !animal) return;
+    createAdoptionInterestMutation.mutate({
+      animal: animal,
+      interested: user,
+    });
+  }, [animal, createAdoptionInterestMutation, user]);
 
   return (
     <ScreenLayout
@@ -117,6 +132,8 @@ export function SingleAnimalScreen({ route }: StackProps) {
               buttonColor={theme.colors.secondary}
               textColor={theme.colors.onSecondary}
               style={styles.button}
+              onPress={onAdoptAnimal}
+              loading={createAdoptionInterestMutation.isLoading}
             >
               Pretendo Adotar
             </Button>

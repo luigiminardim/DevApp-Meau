@@ -5,6 +5,8 @@ import {
   RegisterAnimalParam,
 } from "./use-cases/RegisterAnimalUsecase";
 
+export type { Animal } from "./entities/Animal";
+
 export type {
   RegisterAnimalUsecase,
   RegisterAnimalParam,
