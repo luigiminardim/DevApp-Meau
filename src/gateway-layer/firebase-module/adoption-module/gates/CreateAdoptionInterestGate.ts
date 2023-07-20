@@ -17,6 +17,7 @@ export class CreateAdoptionInterestGateImpl
     return {
       animalId: animal.id,
       interestedUserId: interested.id,
+      messages: [],
     };
   };
 

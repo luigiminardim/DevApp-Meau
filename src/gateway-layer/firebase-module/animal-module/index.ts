@@ -1,15 +1,20 @@
+import { AnimalData } from "./gates/dto/AnimalData";
 import { Firestore } from "firebase/firestore";
 import { FirebaseStorage } from "firebase/storage";
 import { GetAnimalsAdoptionGate } from "./gates/GetAnimalsAdoptionGate";
 import { GetSingleAnimalGate } from "./gates/GetSingleAnimalGate";
 import { RegisterAnimalGate } from "./gates/RegisterAnimalGate";
-import { AnimalBuilder } from "./gates/utils/AnimalBuilder";
 import { GetUserAnimalsGate } from "./gates/GetUserAnimalsGate";
 import { RemoveAnimalGate } from "./gates/RemoveAnimalGate";
+import { AnimalDataRepository } from "./repositories/AnimalDataRepository";
+import { AnimalBuilder } from "./builders/AnimalBuilder";
 
-export type { AnimalData } from "./gates/dto/AnimalData";
+export { AnimalData, AnimalBuilder, GetSingleAnimalGate, AnimalDataRepository };
 
 export class FirebaseAnimalModule {
+  animalDataRepository: AnimalDataRepository;
+  animalBuilder: AnimalBuilder;
+
   registerAnimalGate: RegisterAnimalGate;
   getAnimalsAdoptionGate: GetAnimalsAdoptionGate;
   getSingleAnimalGate: GetSingleAnimalGate;
@@ -17,20 +22,24 @@ export class FirebaseAnimalModule {
   removeAnimalGate: RemoveAnimalGate;
 
   constructor(firebaseDb: Firestore, firebaseStorage: FirebaseStorage) {
+    this.animalDataRepository = new AnimalDataRepository(firebaseDb);
     this.registerAnimalGate = new RegisterAnimalGate(
       firebaseDb,
       firebaseStorage
     );
-    const animalBuilder = new AnimalBuilder(firebaseStorage);
+    this.animalBuilder = new AnimalBuilder(firebaseStorage);
     this.getAnimalsAdoptionGate = new GetAnimalsAdoptionGate(
       firebaseDb,
-      animalBuilder
+      this.animalBuilder
     );
     this.getSingleAnimalGate = new GetSingleAnimalGate(
-      firebaseDb,
-      animalBuilder
+      this.animalDataRepository,
+      this.animalBuilder
     );
-    this.getUserAnimalsGate = new GetUserAnimalsGate(firebaseDb, animalBuilder);
+    this.getUserAnimalsGate = new GetUserAnimalsGate(
+      firebaseDb,
+      this.animalBuilder
+    );
     this.removeAnimalGate = new RemoveAnimalGate(firebaseDb);
   }
 }

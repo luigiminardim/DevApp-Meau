@@ -3,21 +3,13 @@ import {
   signInWithEmailAndPassword,
   Auth as FirebaseAuth,
 } from "firebase/auth";
-import {
-  collection,
-  DocumentData,
-  Firestore,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
 import { UserBuilder } from "./utils/UserBuilder";
-import { UserData } from "../dto/UserData";
+import { UserDataRepository } from "../repositories/UserDataRepository";
 
 export class FirebaseLoginGate implements LoginGate {
   constructor(
     private firebaseAuth: FirebaseAuth,
-    private firebaseDb: Firestore,
+    private userDataRepostory: UserDataRepository,
     private userBuilder: UserBuilder
   ) {}
 
@@ -30,15 +22,14 @@ export class FirebaseLoginGate implements LoginGate {
         param.username,
         param.password
       );
-      const usersRef = collection(this.firebaseDb, "users");
-      const userQuery = query(usersRef, where("id", "==", id));
-      const querySnapshot = await getDocs(userQuery);
-      const userDocs = [] as DocumentData[];
-      querySnapshot.forEach((doc) => userDocs.push(doc.data()));
-      const userDoc = userDocs[0];
-      if (!userDoc) return { type: "error", error: "User not found" };
+      const getUserDataResult = await this.userDataRepostory.getUserDataById(
+        id
+      );
+      if (!getUserDataResult.success) {
+        return { type: "error", error: getUserDataResult.error };
+      }
       const user = await this.userBuilder.buildUserFromData(
-        userDoc as UserData
+        getUserDataResult.data
       );
       return { type: "success", user };
     } catch (err) {

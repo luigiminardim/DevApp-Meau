@@ -1,3 +1,9 @@
+import { GetAnimalAdoptionInterestsGate } from "./adoption-module/use-cases/GetChatAdoptionInterestsUsecase";
+import {
+  GetAdoptionInterestSubscriptionUsecase,
+  GetUserAdoptionInterestsGate,
+  SendMessageUsecase,
+} from "./adoption-module";
 import {
   AdoptionModule,
   CreateAdoptionInterestGate,
@@ -11,12 +17,7 @@ import {
   GetUserAnimalsUsecase,
   RemoveAnimalUseCase,
 } from "./animal-module";
-import {
-  LoginGate,
-  UserModule,
-  SignUpUsecase,
-  GetUserGate,
-} from "./user-module";
+import { LoginGate, UserModule, GetUserGate, SignUpGate } from "./user-module";
 import { SetNotificationTokenGate } from "./user-module";
 
 export class CoreLayer {
@@ -25,7 +26,7 @@ export class CoreLayer {
   adoptionModule: AdoptionModule;
 
   constructor(
-    signUpUsecase: SignUpUsecase,
+    signUpGate: SignUpGate,
     loginGate: LoginGate,
     registerAnimalUsecase: RegisterAnimalUsecase,
     getSingleAnimalUsecase: GetSingleAnimalUsecase,
@@ -35,11 +36,15 @@ export class CoreLayer {
     createAdoptionInterestGate: CreateAdoptionInterestGate,
     getUserGate: GetUserGate,
     notifyAdoptionInterestGate: NotifyUserGate,
-    setNotificationtokenGate: SetNotificationTokenGate
+    setNotificationtokenGate: SetNotificationTokenGate,
+    getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate,
+    getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate,
+    getAdoptionInterestSubscriptionUsecase: GetAdoptionInterestSubscriptionUsecase,
+    sendMessageGate: SendMessageUsecase
   ) {
     this.userModule = new UserModule(
       loginGate,
-      signUpUsecase,
+      signUpGate,
       setNotificationtokenGate
     );
     this.animalModule = new AnimalModule(
@@ -47,12 +52,18 @@ export class CoreLayer {
       getSingleAnimalUsecase,
       getAnimalsAdoptionUsecase,
       getUserAnimalsUsecase,
-      removeAnimalUsecase
+      removeAnimalUsecase,
+      getUserAnimalsUsecase
     );
     this.adoptionModule = new AdoptionModule(
       createAdoptionInterestGate,
       getUserGate,
-      notifyAdoptionInterestGate
+      notifyAdoptionInterestGate,
+      this.animalModule.getUserAnimalUsecase,
+      getUserAdoptionInterestsGate,
+      getAnimalAdoptionInterestsGate,
+      getAdoptionInterestSubscriptionUsecase,
+      sendMessageGate
     );
   }
 }

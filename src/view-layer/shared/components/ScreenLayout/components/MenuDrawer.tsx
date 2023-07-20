@@ -46,45 +46,49 @@ export function MenuDrawer({
       onOpen={onOpen}
       renderDrawerContent={() => (
         <ScrollView contentContainerStyle={styles.container}>
-          {user && (
-            <>
-              <View style={styles.header}>
-                <Avatar.Image size={64} source={{ uri: user.imageUri }} />
-              </View>
-              <List.Accordion
-                title={user.name}
-                style={styles.profileAccordionHeader}
-                titleStyle={styles.profileAccordionHeaderTitle}
-                // eslint-disable-next-line react/no-unstable-nested-components
-                left={() => <></>} // Add Padding in Accordion.Item s
-              >
-                <List.Item title="Meu Perfil" />
-                <List.Item
-                  title="Meus Pets"
-                  onPress={() => navigation.navigate("myPets")}
-                />
-                <List.Item title="Favoritos" />
-                <List.Item title="Chat" />
-              </List.Accordion>
-            </>
-          )}
-          {user && (
-            <List.Accordion
-              title="Atalhos"
-              // eslint-disable-next-line react/no-unstable-nested-components
-              left={() => (
-                <List.Icon color={theme.colors.onSurface} icon="paw" />
+          <>
+            <View style={styles.header}>
+              {user ? (
+                <Avatar.Image size={64} source={{ uri: user?.imageUri }} />
+              ) : (
+                <Avatar.Icon size={64} icon="account" />
               )}
-              style={styles.shortcutAccordionHeader}
-              titleStyle={styles.shortcutAccordionHeaderTitle}
+            </View>
+            <List.Accordion
+              title={user?.name ?? "Visitante"}
+              style={styles.profileAccordionHeader}
+              titleStyle={styles.profileAccordionHeaderTitle}
+              // eslint-disable-next-line react/no-unstable-nested-components
+              left={() => <></>} // Add Padding in Accordion.Item s
             >
+              <List.Item title="Meu Perfil" />
               <List.Item
-                title="Cadastrar um pet"
-                onPress={() => navigation.navigate("RegisterAnimal")}
+                title="Meus Pets"
+                onPress={() => navigation.navigate("myPets")}
               />
-              <List.Item title="Adotar um pet" />
+              <List.Item title="Favoritos" />
+              <List.Item
+                title="Chat"
+                onPress={() => navigation.navigate("ChatList")}
+              />
             </List.Accordion>
-          )}
+          </>
+          <List.Accordion
+            title="Atalhos"
+            // eslint-disable-next-line react/no-unstable-nested-components
+            left={() => <List.Icon color={theme.colors.onSurface} icon="paw" />}
+            style={styles.shortcutAccordionHeader}
+            titleStyle={styles.shortcutAccordionHeaderTitle}
+          >
+            <List.Item
+              title="Cadastrar um pet"
+              onPress={() => navigation.navigate("RegisterAnimal")}
+            />
+            <List.Item
+              title="Adotar um pet"
+              onPress={() => navigation.navigate("AdoptionList")}
+            />
+          </List.Accordion>
           <List.Accordion
             title="Informações"
             style={styles.informationAccordionHeader}

@@ -9,6 +9,8 @@ export type StackNavigationParamList = {
   SingleAnimal: { id: string };
   myPets: undefined;
   RemoveAnimal: { id: string };
+  ChatList: undefined;
+  Chat: { adoptionInterestId: string };
 };
 
 export const useNavigation = ReactNavigation.useNavigation<
