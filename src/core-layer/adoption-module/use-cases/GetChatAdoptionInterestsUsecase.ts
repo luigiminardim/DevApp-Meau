@@ -12,7 +12,7 @@ export interface GetChatAdoptionInterestsUsecase {
   >;
 }
 
-export interface GetUserAdoptionInterestsGate {
+export interface GetUserAdoptionInterestsUsecase {
   getUserAdoptionInterests(param: {
     user: User;
   }): Promise<
@@ -35,7 +35,7 @@ export class GetChatAdoptionInterestsUsecaseImpl
 {
   constructor(
     private getUserAnimalUsecase: GetUserAnimalsUsecase,
-    private getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate,
+    private getUserAdoptionInterestsGate: GetUserAdoptionInterestsUsecase,
     private getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate
   ) {}
 
