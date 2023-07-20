@@ -6,7 +6,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { GetAnimalsAdoptionUsecase } from "../../../../core-layer/animal-module/use-cases/GetAnimalsAdoptionUsecase";
-import { AnimalBuilder } from "./utils/AnimalBuilder";
+import { AnimalBuilder } from "../builders/AnimalBuilder";
 import { AnimalData } from "./dto/AnimalData";
 import { Animal } from "../../../../core-layer/animal-module/entities/Animal";
 

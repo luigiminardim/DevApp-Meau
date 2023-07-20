@@ -1,10 +1,10 @@
+import { User } from "../../user-module";
 import { Animal } from "../entities/Animal";
 
 export interface GetUserAnimalsUsecase {
-  queryUserAnimals(param: {
-    donorId: string;
+  getUserAnimals(param: {
+    user: User;
   }): Promise<
-    | { type: "success"; userAnimals: Array<Animal> }
-    | { type: "error"; error: string }
+    { success: true; animals: Animal[] } | { success: false; message: string }
   >;
 }

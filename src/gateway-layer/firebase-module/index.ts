@@ -24,7 +24,11 @@ export class FirebaseModule {
     this.adoptionModule = new FirebaseAdoptionModule(
       firebaseDb,
       notifierGate,
-      getDeviceNotificationTokenGate
+      getDeviceNotificationTokenGate,
+      this.userModule.userDataRepository,
+      this.userModule.userBuilder,
+      this.animalModule.animalDataRepository,
+      this.animalModule.animalBuilder
     );
   }
 }

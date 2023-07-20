@@ -1,6 +1,6 @@
 import { FirebaseStorage, getDownloadURL, ref } from "firebase/storage";
-import { Animal } from "../../../../../core-layer/animal-module/entities/Animal";
-import { AnimalData } from "../dto/AnimalData";
+import { Animal } from "../../../../core-layer/animal-module/entities/Animal";
+import { AnimalData } from "../gates/dto/AnimalData";
 
 export class AnimalBuilder {
   constructor(private firebaseStorage: FirebaseStorage) {}

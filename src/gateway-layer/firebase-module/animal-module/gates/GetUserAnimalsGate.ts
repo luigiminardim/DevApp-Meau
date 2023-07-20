@@ -1,44 +1,42 @@
 import {
   Firestore,
   collection,
+  getDocs,
   query,
   where,
-  getDocs,
 } from "firebase/firestore";
-import { GetUserAnimalsUsecase } from "../../../../core-layer/animal-module/use-cases/GetUserAnimalsUsecase";
-import { AnimalBuilder } from "./utils/AnimalBuilder";
+import { GetUserAnimalsUsecase } from "../../../../core-layer/animal-module";
+import { AnimalBuilder } from "../builders/AnimalBuilder";
 import { AnimalData } from "./dto/AnimalData";
-import { Animal } from "../../../../core-layer/animal-module/entities/Animal";
 
 export class GetUserAnimalsGate implements GetUserAnimalsUsecase {
   constructor(
     private firebaseDb: Firestore,
     private animalBuilder: AnimalBuilder
   ) {}
-  queryUserAnimals: GetUserAnimalsUsecase["queryUserAnimals"] = async (
-    param
-  ) => {
+
+  getUserAnimals: GetUserAnimalsUsecase["getUserAnimals"] = async (param) => {
     try {
-      const animalsRef = collection(this.firebaseDb, "animals");
-      const animalsQuery = query(
-        animalsRef,
-        where("donorId", "==", param.donorId.toString())
-      );
-      const querySnapshot = await getDocs(animalsQuery);
-      const userAnimals: Animal[] = [];
-      for (const snapshot of querySnapshot.docs) {
-        let animal = await this.animalBuilder.buildAnimalFromData(
-          snapshot.id,
-          snapshot.data() as AnimalData
+      const animalTuples = await getDocs(
+        query(
+          collection(this.firebaseDb, "animals"),
+          where("donorId", "==", param.user.id)
+        )
+      ).then((querySnapshot) => {
+        let docsTuple = [] as [string, AnimalData][];
+        querySnapshot.forEach((doc) =>
+          docsTuple.push([doc.id, doc.data()] as [string, AnimalData])
         );
-        userAnimals.push(animal);
-      }
-      return { type: "success", userAnimals };
-    } catch (err) {
-      return {
-        type: "error",
-        error: "falha ao consultar animais disponiveis",
-      };
+        return docsTuple;
+      });
+      const animals = await Promise.all(
+        animalTuples.map(([id, animalData]) =>
+          this.animalBuilder.buildAnimalFromData(id, animalData)
+        )
+      );
+      return { success: true, animals };
+    } catch (e) {
+      return { success: false, message: String(e) };
     }
   };
 }

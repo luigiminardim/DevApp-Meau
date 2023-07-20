@@ -1,29 +1,23 @@
-import { Firestore, doc, getDoc } from "firebase/firestore";
 import { GetSingleAnimalUsecase } from "../../../../core-layer/animal-module/use-cases/GetSingleAnimalUsecase";
-import { AnimalBuilder } from "./utils/AnimalBuilder";
-import { AnimalData } from "./dto/AnimalData";
+import { AnimalBuilder } from "../builders/AnimalBuilder";
+import { AnimalDataRepository } from "../repositories/AnimalDataRepository";
 
 export class GetSingleAnimalGate implements GetSingleAnimalUsecase {
   constructor(
-    private firebaseDb: Firestore,
+    private animalDataRepository: AnimalDataRepository,
     private animalBuilder: AnimalBuilder
   ) {}
   querySingleAnimal: GetSingleAnimalUsecase["querySingleAnimal"] = async (
     param
   ) => {
-    const id = param.animalId;
-    try {
-      const docRef = doc(this.firebaseDb, "animals", id);
-      const animalSnapshot = await getDoc(docRef);
-      const animalDoc = animalSnapshot.data();
-      if (!animalDoc) return { type: "error", error: "Animal not found" };
-      const animal = await this.animalBuilder.buildAnimalFromData(
-        animalSnapshot.id,
-        animalDoc as AnimalData
-      );
-      return { type: "success", animal };
-    } catch (err) {
-      return { type: "error", error: String(err) };
-    }
+    const result = await this.animalDataRepository.getAnimalDataById(
+      param.animalId
+    );
+    if (!result.success) return { type: "error", error: result.error };
+    const animal = await this.animalBuilder.buildAnimalFromData(
+      param.animalId,
+      result.data
+    );
+    return { type: "success", animal };
   };
 }

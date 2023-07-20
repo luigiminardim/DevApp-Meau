@@ -1,3 +1,4 @@
+import { GetUserAnimalsUsecase } from "./use-cases/GetUserAnimalsUsecase";
 import { GetAnimalsAdoptionUsecase } from "./use-cases/GetAnimalsAdoptionUsecase";
 import { GetSingleAnimalUsecase } from "./use-cases/GetSingleAnimalUsecase";
 import { GetUserAnimalsUsecase } from "./use-cases/GetUserAnimalsUsecase";
@@ -24,6 +25,7 @@ export class AnimalModule {
     public getSingleAnimalUsecase: GetSingleAnimalUsecase,
     public getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase,
     public getUserAnimalsUsecase: GetUserAnimalsUsecase,
-    public removeAnimalUsecase: RemoveAnimalUseCase
+    public removeAnimalUsecase: RemoveAnimalUseCase,
+    public getUserAnimalUsecase: GetUserAnimalsUsecase
   ) {}
 }
