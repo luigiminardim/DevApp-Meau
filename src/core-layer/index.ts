@@ -1,5 +1,6 @@
 import { GetAnimalAdoptionInterestsGate } from "./adoption-module/use-cases/GetChatAdoptionInterestsUsecase";
 import {
+  ConfirmAdoptionUsecase,
   GetAdoptionInterestSubscriptionUsecase,
   GetUserAdoptionInterestsGate,
   SendMessageUsecase,
@@ -40,7 +41,8 @@ export class CoreLayer {
     getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate,
     getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate,
     getAdoptionInterestSubscriptionUsecase: GetAdoptionInterestSubscriptionUsecase,
-    sendMessageGate: SendMessageUsecase
+    sendMessageGate: SendMessageUsecase,
+    confirmAdoptionUsecase: ConfirmAdoptionUsecase
   ) {
     this.userModule = new UserModule(
       loginGate,
@@ -63,7 +65,8 @@ export class CoreLayer {
       getUserAdoptionInterestsGate,
       getAnimalAdoptionInterestsGate,
       getAdoptionInterestSubscriptionUsecase,
-      sendMessageGate
+      sendMessageGate,
+      confirmAdoptionUsecase
     );
   }
 }

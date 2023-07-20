@@ -1,4 +1,5 @@
 import { SendNewMessageGate } from "./gates/SendNewMessageGate";
+import { ConfirmAdoptionGate } from "./gates/ConfirmAdoptionGate";
 import {
   FirebaseSetNotificationTokenGate,
   GetDeviceNotificationTokenGate,
@@ -31,6 +32,7 @@ export class FirebaseAdoptionModule {
   public getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate;
   public getAdoptionInterestSubscriptionGate: GetAdoptionInterestSubscriptionGate;
   public SendNewMessageGate: SendNewMessageGate;
+  public confirmAdoptionGate: ConfirmAdoptionGate;
 
   constructor(
     firebaseDb: Firestore,
@@ -75,5 +77,6 @@ export class FirebaseAdoptionModule {
     this.SendNewMessageGate = new SendNewMessageGate(
       adoptionInterestDataRepository
     );
+    this.confirmAdoptionGate = new ConfirmAdoptionGate(firebaseDb);
   }
 }

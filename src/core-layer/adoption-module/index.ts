@@ -15,6 +15,7 @@ import {
   GetUserAdoptionInterestsUsecase,
 } from "./use-cases/GetChatAdoptionInterestsUsecase";
 import { SendMessageUsecase } from "./use-cases/SendMessageUsecase";
+import { ConfirmAdoptionUsecase } from "./use-cases/ConfirmAdoptionUsecase";
 
 export type {
   AdoptionInterest,
@@ -25,6 +26,7 @@ export type {
   GetAnimalAdoptionInterestsGate,
   GetAdoptionInterestSubscriptionUsecase,
   SendMessageUsecase,
+  ConfirmAdoptionUsecase,
 };
 
 export class AdoptionModule {
@@ -39,7 +41,8 @@ export class AdoptionModule {
     public getUserAdoptionInterestsUsecase: GetUserAdoptionInterestsUsecase,
     public getAnimalAdoptionInterestsUsecase: GetAnimalAdoptionInterestsGate,
     public getAdoptionInterestSubscriptionUsecase: GetAdoptionInterestSubscriptionUsecase,
-    public sendMessageUsecase: SendMessageUsecase
+    public sendMessageUsecase: SendMessageUsecase,
+    public confirmAdoptionUsecase: ConfirmAdoptionUsecase
   ) {
     this.createAdoptionInterestUsecase = new CreateAdoptionInterestUsecaseImpl(
       createAdoptionInterestGate,

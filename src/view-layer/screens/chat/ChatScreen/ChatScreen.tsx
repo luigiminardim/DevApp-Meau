@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { ScreenLayout } from "../../../shared/components/ScreenLayout";
 import {
   ActivityIndicator,
+  Button,
   IconButton,
   MD3Theme,
   Text,
@@ -18,6 +19,7 @@ import { useCoreLayer } from "../../../contexts/CoreLayerContext";
 
 export function ChatScreen({
   route,
+  navigation,
 }: NativeStackScreenProps<StackNavigationParamList, "Chat">) {
   useRequireLoggedUser();
   const { adoptionInterestId } = route.params;
@@ -56,6 +58,18 @@ export function ChatScreen({
       }}
     >
       <View style={styles.contentContainer}>
+        <View style={styles.inputContainer}>
+          <Button
+            mode="contained"
+            onPress={() =>
+              navigation.navigate("ConfirmAdopt", {
+                adoptionInterestId: adoptionInterestId,
+              })
+            }
+          >
+            Completar Adoção
+          </Button>
+        </View>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {adoptionInterest == null ? (
             <View style={styles.center}>
