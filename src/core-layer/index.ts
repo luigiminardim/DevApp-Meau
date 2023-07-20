@@ -38,7 +38,6 @@ export class CoreLayer {
     getUserGate: GetUserGate,
     notifyAdoptionInterestGate: NotifyUserGate,
     setNotificationtokenGate: SetNotificationTokenGate,
-    getUserAnimalsUsecase: GetUserAnimalsUsecase,
     getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate,
     getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate
   ) {

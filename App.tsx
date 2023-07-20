@@ -12,7 +12,6 @@ const {
     getSingleAnimalGate,
     getUserAnimalsGate,
     removeAnimalGate,
-    getUserAnimalsUsecase,
   },
   adoptionModule: {
     createAdoptionInterestGate,
@@ -34,7 +33,6 @@ const coreLayer = new CoreLayer(
   getUserGate,
   notifyUserGate,
   setNotificationTokenGate,
-  getUserAnimalsUsecase,
   getUserAdoptionInterestsGate,
   getAnimalAdoptionInterestsGate
 );

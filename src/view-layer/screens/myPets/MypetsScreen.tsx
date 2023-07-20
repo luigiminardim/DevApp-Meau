@@ -25,9 +25,9 @@ export function MypetsScreen({ navigation }: StackProps) {
     if (!user) {
       return;
     }
-    getUserAnimalsUsecase.queryUserAnimals({ donorId: user.id }).then((res) => {
-      if (res.type === "success") {
-        setAnimals(res.userAnimals);
+    getUserAnimalsUsecase.getUserAnimals({ user }).then((res) => {
+      if (res.success) {
+        setAnimals(res.animals);
       }
     });
   }, [getUserAnimalsUsecase, user]);
