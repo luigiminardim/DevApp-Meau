@@ -59,7 +59,10 @@ export function MenuDrawer({
                 left={() => <></>} // Add Padding in Accordion.Item s
               >
                 <List.Item title="Meu Perfil" />
-                <List.Item title="Meus Pets" />
+                <List.Item
+                  title="Meus Pets"
+                  onPress={() => navigation.navigate("myPets")}
+                />
                 <List.Item title="Favoritos" />
                 <List.Item title="Chat" />
               </List.Accordion>

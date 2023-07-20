@@ -8,6 +8,8 @@ import {
   GetSingleAnimalUsecase,
   RegisterAnimalUsecase,
   GetAnimalsAdoptionUsecase,
+  GetUserAnimalsUsecase,
+  RemoveAnimalUseCase,
 } from "./animal-module";
 import {
   LoginGate,
@@ -27,7 +29,9 @@ export class CoreLayer {
     loginGate: LoginGate,
     registerAnimalUsecase: RegisterAnimalUsecase,
     getSingleAnimalUsecase: GetSingleAnimalUsecase,
+    getUserAnimalsUsecase: GetUserAnimalsUsecase,
     getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase,
+    removeAnimalUsecase: RemoveAnimalUseCase,
     createAdoptionInterestGate: CreateAdoptionInterestGate,
     getUserGate: GetUserGate,
     notifyAdoptionInterestGate: NotifyUserGate,
@@ -41,7 +45,9 @@ export class CoreLayer {
     this.animalModule = new AnimalModule(
       registerAnimalUsecase,
       getSingleAnimalUsecase,
-      getAnimalsAdoptionUsecase
+      getAnimalsAdoptionUsecase,
+      getUserAnimalsUsecase,
+      removeAnimalUsecase
     );
     this.adoptionModule = new AdoptionModule(
       createAdoptionInterestGate,
