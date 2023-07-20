@@ -20,8 +20,9 @@ export class GetUserAdoptionInterestsGateImpl
         return { success: false, message: adoptionInterestsDatasResult.error };
       }
       const adoptionInterestsResults = await Promise.all(
-        adoptionInterestsDatasResult.data.map((adoptionInterestData) =>
+        adoptionInterestsDatasResult.data.map(([id, adoptionInterestData]) =>
           this.adoptionInterstBuilder.buildAdoptionInterestFromData(
+            id,
             adoptionInterestData
           )
         )

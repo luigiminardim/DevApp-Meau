@@ -1,3 +1,4 @@
+import { SendNewMessageGate } from "./gates/SendNewMessageGate";
 import {
   FirebaseSetNotificationTokenGate,
   GetDeviceNotificationTokenGate,
@@ -19,6 +20,7 @@ import { UserDataRepository, UserBuilder } from "../user-module";
 import { AnimalBuilder, AnimalDataRepository } from "../animal-module";
 import { AdoptionInterstBuilder } from "./builders/AdoptionInterestBuilder";
 import { GetAnimalAdoptionInterestsGateImpl } from "./gates/GetAnimalAdoptionInterestsGate";
+import { GetAdoptionInterestSubscriptionGate } from "./gates/GetAdoptionInterestSubscriptionGate";
 export type { NotifierGate, GetDeviceNotificationTokenGate };
 
 export class FirebaseAdoptionModule {
@@ -27,6 +29,8 @@ export class FirebaseAdoptionModule {
   public setNotificationTokenGate: FirebaseSetNotificationTokenGate;
   public getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate;
   public getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate;
+  public getAdoptionInterestSubscriptionGate: GetAdoptionInterestSubscriptionGate;
+  public SendNewMessageGate: SendNewMessageGate;
 
   constructor(
     firebaseDb: Firestore,
@@ -63,5 +67,13 @@ export class FirebaseAdoptionModule {
         adoptionInterestDataRepository,
         adoptionInterestBuilder
       );
+    this.getAdoptionInterestSubscriptionGate =
+      new GetAdoptionInterestSubscriptionGate(
+        firebaseDb,
+        adoptionInterestBuilder
+      );
+    this.SendNewMessageGate = new SendNewMessageGate(
+      adoptionInterestDataRepository
+    );
   }
 }

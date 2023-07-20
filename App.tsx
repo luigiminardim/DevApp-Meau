@@ -19,6 +19,8 @@ const {
     setNotificationTokenGate,
     getUserAdoptionInterestsGate,
     getAnimalAdoptionInterestsGate,
+    getAdoptionInterestSubscriptionGate,
+    SendNewMessageGate,
   },
 } = new FirebaseModule(notifierGate, getDeviceNotificationTokenGate);
 const coreLayer = new CoreLayer(
@@ -34,7 +36,9 @@ const coreLayer = new CoreLayer(
   notifyUserGate,
   setNotificationTokenGate,
   getUserAdoptionInterestsGate,
-  getAnimalAdoptionInterestsGate
+  getAnimalAdoptionInterestsGate,
+  getAdoptionInterestSubscriptionGate,
+  SendNewMessageGate
 );
 
 export default function Main() {

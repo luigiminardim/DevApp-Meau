@@ -1,3 +1,4 @@
+import { GetAdoptionInterestSubscriptionUsecase } from "./use-cases/GetAdoptionInterestSubscriptionUsecase";
 import { AdoptionInterest } from "./entities/AdoptionInterest";
 import { GetUserAnimalsUsecase } from "../animal-module";
 import { GetUserGate } from "../user-module";
@@ -13,6 +14,7 @@ import {
   GetChatAdoptionInterestsUsecaseImpl,
   GetUserAdoptionInterestsGate,
 } from "./use-cases/GetChatAdoptionInterestsUsecase";
+import { SendMessageUsecase } from "./use-cases/SendMessageUsecase";
 
 export type {
   AdoptionInterest,
@@ -21,6 +23,8 @@ export type {
   NotifyUserGate,
   GetUserAdoptionInterestsGate,
   GetAnimalAdoptionInterestsGate,
+  GetAdoptionInterestSubscriptionUsecase,
+  SendMessageUsecase,
 };
 
 export class AdoptionModule {
@@ -33,7 +37,9 @@ export class AdoptionModule {
     notifyAdoptionInterestGate: NotifyUserGate,
     getUserAnimalsUsecase: GetUserAnimalsUsecase,
     getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate,
-    getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate
+    getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate,
+    public getAdoptionInterestSubscriptionUsecase: GetAdoptionInterestSubscriptionUsecase,
+    public sendMessageUsecase: SendMessageUsecase
   ) {
     this.createAdoptionInterestUsecase = new CreateAdoptionInterestUsecaseImpl(
       createAdoptionInterestGate,

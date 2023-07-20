@@ -10,7 +10,10 @@ import {
 } from "react-native-paper";
 import { useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { StackNavigationParamList } from "../../../shared/StackNavigationParamList";
+import {
+  StackNavigationParamList,
+  useNavigation,
+} from "../../../shared/StackNavigationParamList";
 import { useChatAdoptionInterestsQuery } from "./useChatAdoptionInterestsQuery";
 import { useUserContext } from "../../../contexts/UserContext";
 import { useRequireLoggedUser } from "../../../shared/hooks/useRequireLoggedUser";
@@ -22,6 +25,8 @@ export function ChatListScreen({}: NativeStackScreenProps<
   useRequireLoggedUser();
   const { user } = useUserContext();
   const { adoptionInterests } = useChatAdoptionInterestsQuery({ user });
+
+  const navigation = useNavigation();
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
@@ -59,6 +64,11 @@ export function ChatListScreen({}: NativeStackScreenProps<
                 )}
                 titleStyle={styles.itemTitle}
                 descriptionStyle={styles.itemDescription}
+                onPress={() =>
+                  navigation.navigate("Chat", {
+                    adoptionInterestId: adoptionInterest.id,
+                  })
+                }
               />
             ) : (
               <List.Item
@@ -75,6 +85,11 @@ export function ChatListScreen({}: NativeStackScreenProps<
                 )}
                 titleStyle={styles.itemTitle}
                 descriptionStyle={styles.itemDescription}
+                onPress={() =>
+                  navigation.navigate("Chat", {
+                    adoptionInterestId: adoptionInterest.id,
+                  })
+                }
               />
             )
           )

@@ -12,6 +12,7 @@ export class AdoptionInterstBuilder {
   ) {}
 
   async buildAdoptionInterestFromData(
+    id: string,
     data: AdoptionInterestData
   ): Promise<
     | { success: true; adoptionInterest: AdoptionInterest }
@@ -46,7 +47,13 @@ export class AdoptionInterstBuilder {
     );
     return {
       success: true,
-      adoptionInterest: { animal, interestedUser, owner },
+      adoptionInterest: {
+        id,
+        animal,
+        interestedUser,
+        owner,
+        messages: data.messages,
+      },
     };
   }
 }

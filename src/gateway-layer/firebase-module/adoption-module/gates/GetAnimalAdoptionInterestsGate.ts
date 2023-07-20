@@ -16,16 +16,13 @@ export class GetAnimalAdoptionInterestsGateImpl
         await this.adoptionInterestDataRepository.getByAnimalId(
           param.animal.id
         );
-      console.log(
-        `adoptionInterestsDatasResult: ${param.animal.id}`,
-        adoptionInterestsDatasResult
-      );
       if (!adoptionInterestsDatasResult.success) {
         return { success: false, message: adoptionInterestsDatasResult.error };
       }
       const adoptionInterestsResults = await Promise.all(
-        adoptionInterestsDatasResult.data.map((adoptionInterestData) =>
+        adoptionInterestsDatasResult.data.map(([id, adoptionInterestData]) =>
           this.adoptionInterstBuilder.buildAdoptionInterestFromData(
+            id,
             adoptionInterestData
           )
         )
