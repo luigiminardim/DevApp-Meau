@@ -49,6 +49,11 @@ export function RemovePetScreen({ route, navigation }: StackProps) {
     navigation.navigate("myPets");
   }, [id, removeAnimalMutation, animal, navigation]);
 
+  const onGetAdoptionInterest = useCallback(() => {
+    if (!animal) return;
+    navigation.navigate("animalsInterest", { animal });
+  }, [navigation, animal]);
+
   return animal ? (
     <ScreenLayout
       appBarProps={{
@@ -111,29 +116,63 @@ export function RemovePetScreen({ route, navigation }: StackProps) {
             <Divider style={styles.divider} />
             <View>
               <Text style={styles.smallHeader}>Temperamento</Text>
-              <Text>#TODO!</Text>
+              <Text>{animal.temperament.calm ? "Calmo" : null}</Text>
+              <Text>{animal.temperament.loving ? "Amoroso" : null}</Text>
+              <Text>{animal.temperament.guard ? "Guarda" : null}</Text>
+              <Text>{animal.temperament.lazy ? "Preguiçoso" : null}</Text>
+              <Text>{animal.temperament.shy ? "Tímido" : null}</Text>
+              <Text>{animal.temperament.playful ? "Brincalhão" : null}</Text>
             </View>
             <Divider style={styles.divider} />
             <View>
               <Text style={styles.smallHeader}>Exigências do doador</Text>
-              <Text>#TODO!</Text>
+              <Text>
+                {animal.adoptionRequirements.terms ? "Termos de adoção" : null}
+              </Text>
+              <Text>
+                {animal.adoptionRequirements.animalPreviousVisit
+                  ? "Visita prévia ao animal"
+                  : null}
+              </Text>
+              <Text>
+                {animal.adoptionRequirements.homePhotos
+                  ? "Fotos da casa"
+                  : null}
+              </Text>
+              <Text>
+                {animal.adoptionRequirements.postAdoptionFollowup === "null"
+                  ? "Não há"
+                  : animal.adoptionRequirements.postAdoptionFollowup}
+              </Text>
             </View>
             <Divider style={styles.divider} />
             <View>
               <Text style={styles.smallHeader}>Mais sobre {animal.name}</Text>
               <Text>{animal.commentary}</Text>
             </View>
-            <Button
-              mode="contained"
-              compact
-              buttonColor={theme.colors.primary}
-              textColor={theme.colors.onPrimary}
-              style={styles.button}
-              onPress={onRemoveAnimal}
-              loading={removeAnimalMutation.isLoading}
-            >
-              Remover Pet
-            </Button>
+            <View style={styles.row}>
+              <Button
+                mode="contained"
+                compact
+                buttonColor={theme.colors.primary}
+                textColor={theme.colors.onPrimary}
+                style={styles.button}
+                onPress={onRemoveAnimal}
+                loading={removeAnimalMutation.isLoading}
+              >
+                Remover Pet
+              </Button>
+              <Button
+                mode="contained"
+                compact
+                buttonColor={theme.colors.primary}
+                textColor={theme.colors.onPrimary}
+                style={[styles.button, styles.marginLeft]}
+                onPress={onGetAdoptionInterest}
+              >
+                Mostrar interessados
+              </Button>
+            </View>
           </View>
         </ScrollView>
       )}
@@ -171,5 +210,11 @@ const createStyles = (theme: MD3Theme) =>
     },
     button: {
       marginVertical: 28,
+    },
+    row: {
+      flexDirection: "row",
+    },
+    marginLeft: {
+      marginLeft: 16,
     },
   });

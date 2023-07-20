@@ -114,12 +114,34 @@ export function SingleAnimalScreen({ route }: StackProps) {
             <Divider style={styles.divider} />
             <View>
               <Text style={styles.smallHeader}>Temperamento</Text>
-              <Text>#TODO!</Text>
+              <Text>{animal.temperament.calm ? "Calmo" : null}</Text>
+              <Text>{animal.temperament.loving ? "Amoroso" : null}</Text>
+              <Text>{animal.temperament.guard ? "Guarda" : null}</Text>
+              <Text>{animal.temperament.lazy ? "Preguiçoso" : null}</Text>
+              <Text>{animal.temperament.shy ? "Tímido" : null}</Text>
+              <Text>{animal.temperament.playful ? "Brincalhão" : null}</Text>
             </View>
             <Divider style={styles.divider} />
             <View>
               <Text style={styles.smallHeader}>Exigências do doador</Text>
-              <Text>#TODO!</Text>
+              <Text>
+                {animal.adoptionRequirements.terms ? "Termos de adoção" : null}
+              </Text>
+              <Text>
+                {animal.adoptionRequirements.animalPreviousVisit
+                  ? "Visita prévia ao animal"
+                  : null}
+              </Text>
+              <Text>
+                {animal.adoptionRequirements.homePhotos
+                  ? "Fotos da casa"
+                  : null}
+              </Text>
+              <Text>
+                {animal.adoptionRequirements.postAdoptionFollowup === "null"
+                  ? "Não é necessário acompanhamento pós adoção "
+                  : animal.adoptionRequirements.postAdoptionFollowup}
+              </Text>
             </View>
             <Divider style={styles.divider} />
             <View>

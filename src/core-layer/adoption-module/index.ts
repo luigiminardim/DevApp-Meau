@@ -12,7 +12,7 @@ import {
   GetAnimalAdoptionInterestsGate,
   GetChatAdoptionInterestsUsecase,
   GetChatAdoptionInterestsUsecaseImpl,
-  GetUserAdoptionInterestsGate,
+  GetUserAdoptionInterestsUsecase,
 } from "./use-cases/GetChatAdoptionInterestsUsecase";
 import { SendMessageUsecase } from "./use-cases/SendMessageUsecase";
 
@@ -21,7 +21,7 @@ export type {
   CreateAdoptionInterestUsecase,
   CreateAdoptionInterestGate,
   NotifyUserGate,
-  GetUserAdoptionInterestsGate,
+  GetUserAdoptionInterestsUsecase as GetUserAdoptionInterestsGate,
   GetAnimalAdoptionInterestsGate,
   GetAdoptionInterestSubscriptionUsecase,
   SendMessageUsecase,
@@ -36,8 +36,8 @@ export class AdoptionModule {
     getUserGate: GetUserGate,
     notifyAdoptionInterestGate: NotifyUserGate,
     getUserAnimalsUsecase: GetUserAnimalsUsecase,
-    getUserAdoptionInterestsGate: GetUserAdoptionInterestsGate,
-    getAnimalAdoptionInterestsGate: GetAnimalAdoptionInterestsGate,
+    public getUserAdoptionInterestsUsecase: GetUserAdoptionInterestsUsecase,
+    public getAnimalAdoptionInterestsUsecase: GetAnimalAdoptionInterestsGate,
     public getAdoptionInterestSubscriptionUsecase: GetAdoptionInterestSubscriptionUsecase,
     public sendMessageUsecase: SendMessageUsecase
   ) {
@@ -49,8 +49,8 @@ export class AdoptionModule {
     this.getChatAdoptionInterestsUsecase =
       new GetChatAdoptionInterestsUsecaseImpl(
         getUserAnimalsUsecase,
-        getUserAdoptionInterestsGate,
-        getAnimalAdoptionInterestsGate
+        getUserAdoptionInterestsUsecase,
+        getAnimalAdoptionInterestsUsecase
       );
   }
 }

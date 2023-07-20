@@ -20,6 +20,7 @@ import { SingleAnimalScreen } from "../screens/AdoptAnimal/ViewAnimal/SingleAnim
 import { RemovePetScreen } from "../screens/myPets/RemovePetScreen";
 import { ChatListScreen } from "../screens/chat/ChatListScreen";
 import { ChatScreen } from "../screens/chat/ChatScreen/ChatScreen";
+import { InterestScreen } from "../screens/myPets/interestScreen";
 
 const Stack = createNativeStackNavigator<StackNavigationParamList>();
 
@@ -57,6 +58,7 @@ export function App({ coreLayer }: AppProps) {
               <Stack.Screen name="RemoveAnimal" component={RemovePetScreen} />
               <Stack.Screen name="ChatList" component={ChatListScreen} />
               <Stack.Screen name="Chat" component={ChatScreen} />
+              <Stack.Screen name="animalsInterest" component={InterestScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </ThemeProvider>
