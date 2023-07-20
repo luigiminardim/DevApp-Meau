@@ -8,18 +8,19 @@ import {
   collection,
 } from "firebase/firestore";
 import { FirebaseStorage, ref, uploadBytes } from "firebase/storage";
-import { SignUpUsecase } from "../../../../core-layer/user-module";
+import { SignUpGate } from "../../../../core-layer/user-module";
 import { UserData } from "../dto/UserData";
 
 type CreateUserDocumentData = Omit<UserData, "imageUri">;
 
-export class SignUpGate implements SignUpUsecase {
+export class SignUpGateImpl implements SignUpGate {
   constructor(
     private firebaseAuth: FirebaseAuth,
     private firebaseDb: FirebaseDb,
     private firebaseStorage: FirebaseStorage
   ) {}
-  signUpWithPassword: SignUpUsecase["signUpWithPassword"] = async (param) => {
+
+  signUpWithPassword: SignUpGate["signUpWithPassword"] = async (param) => {
     try {
       const createAuthResult = await createUserWithEmailAndPassword(
         this.firebaseAuth,
@@ -42,9 +43,9 @@ export class SignUpGate implements SignUpUsecase {
         phone: param.phone,
       };
       const dbRef = collection(this.firebaseDb, "users");
-      const { id } = await addDoc(dbRef, userData);
+      await addDoc(dbRef, userData);
       await uploadBytes(imageRef, imageBlob);
-      return { type: "success", userId: id };
+      return { type: "success" };
     } catch (err) {
       return { type: "error", error: String(err) };
     }

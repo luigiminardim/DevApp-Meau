@@ -19,7 +19,7 @@ export class AdoptionInterestDataRepository {
     try {
       const { docs } = await getDocs(
         query(
-          collection(this.firebaseDb, "adoptionInterests"),
+          collection(this.firebaseDb, "adoption-interests"),
           where("interestedUserId", "==", interestedUserId)
         )
       );
@@ -39,7 +39,7 @@ export class AdoptionInterestDataRepository {
     try {
       const { docs } = await getDocs(
         query(
-          collection(this.firebaseDb, "adoptionInterests"),
+          collection(this.firebaseDb, "adoption-interests"),
           where("animalId", "==", animalId)
         )
       );

@@ -7,5 +7,4 @@ export type UserData = {
   city: string;
   address: string;
   phone: string;
-  imageUri: string;
 };

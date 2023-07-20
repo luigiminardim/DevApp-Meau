@@ -16,6 +16,10 @@ export class GetAnimalAdoptionInterestsGateImpl
         await this.adoptionInterestDataRepository.getByAnimalId(
           param.animal.id
         );
+      console.log(
+        `adoptionInterestsDatasResult: ${param.animal.id}`,
+        adoptionInterestsDatasResult
+      );
       if (!adoptionInterestsDatasResult.success) {
         return { success: false, message: adoptionInterestsDatasResult.error };
       }

@@ -13,6 +13,8 @@ import { useCallback, useState } from "react";
 import { useCoreLayer } from "../../contexts/CoreLayerContext";
 import { ImageInput } from "../../shared/components/ImageInput";
 import { ScreenLayout } from "../../shared/components/ScreenLayout";
+import { useNavigation } from "../../shared/StackNavigationParamList";
+import { useUserContext } from "../../contexts/UserContext";
 
 type SignUpFormValue = {
   name: string;
@@ -41,16 +43,18 @@ export function SignUpScreen() {
 
   const [imageUri, setImageUri] = useState(null as null | string);
   const [snackMessage, setSnackMessage] = useState(null as string | null);
+  const navigator = useNavigation();
 
   const {
-    userModule: { signUpUsecase },
+    userModule: { signupUsecase },
   } = useCoreLayer();
+  const { setUser } = useUserContext();
   const onSubmit = useCallback(
     async (formValue: SignUpFormValue) => {
       if (!imageUri) {
         return;
       }
-      const result = await signUpUsecase.signUpWithPassword({
+      const result = await signupUsecase.signUpWithPassword({
         email: formValue.email,
         password: formValue.password,
         name: formValue.name,
@@ -61,10 +65,15 @@ export function SignUpScreen() {
         phone: formValue.phone,
         imageUri,
       });
-      if (result.type === "error") setSnackMessage(result.error);
-      else setSnackMessage("Sucesso");
+      if (result.type === "error") {
+        setSnackMessage(result.error);
+        return;
+      }
+      setSnackMessage("Sucesso");
+      setUser(result.user);
+      navigator.goBack();
     },
-    [imageUri, signUpUsecase]
+    [imageUri, navigator, setUser, signupUsecase]
   );
 
   const styles = useMemo(() => createStyles(theme), [theme]);

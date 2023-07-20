@@ -1,11 +1,12 @@
 import { UserDataRepository } from "./repositories/UserDataRepository";
 import { Auth as FirebaseAuth } from "firebase/auth";
 import { Firestore } from "firebase/firestore";
-import { SignUpGate } from "./gates/SignUpGate";
+import { SignUpGateImpl } from "./gates/SignUpGate";
 import { FirebaseLoginGate } from "./gates/FirebaseLoginGate";
 import { FirebaseStorage } from "firebase/storage";
 import { UserBuilder } from "./gates/utils/UserBuilder";
 import { FirebaseGetUserGate } from "./gates/FirebaseGetUserGate";
+import { SignUpGate } from "../../../core-layer/user-module";
 
 export { UserDataRepository, UserBuilder };
 
@@ -25,7 +26,11 @@ export class FirebaseUserModule {
     this.userDataRepository = new UserDataRepository(firebaseDb);
     this.userBuilder = new UserBuilder(firebaseStorage);
     this.getUserGate = new FirebaseGetUserGate(firebaseDb, this.userBuilder);
-    this.signUpGate = new SignUpGate(firebaseAuth, firebaseDb, firebaseStorage);
+    this.signUpGate = new SignUpGateImpl(
+      firebaseAuth,
+      firebaseDb,
+      firebaseStorage
+    );
     this.loginGate = new FirebaseLoginGate(
       firebaseAuth,
       this.userDataRepository,

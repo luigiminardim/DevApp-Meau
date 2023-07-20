@@ -13,12 +13,7 @@ import {
   GetUserAnimalsUsecase,
   RemoveAnimalUseCase,
 } from "./animal-module";
-import {
-  LoginGate,
-  UserModule,
-  SignUpUsecase,
-  GetUserGate,
-} from "./user-module";
+import { LoginGate, UserModule, GetUserGate, SignUpGate } from "./user-module";
 import { SetNotificationTokenGate } from "./user-module";
 
 export class CoreLayer {
@@ -27,7 +22,7 @@ export class CoreLayer {
   adoptionModule: AdoptionModule;
 
   constructor(
-    signUpUsecase: SignUpUsecase,
+    signUpGate: SignUpGate,
     loginGate: LoginGate,
     registerAnimalUsecase: RegisterAnimalUsecase,
     getSingleAnimalUsecase: GetSingleAnimalUsecase,
@@ -43,7 +38,7 @@ export class CoreLayer {
   ) {
     this.userModule = new UserModule(
       loginGate,
-      signUpUsecase,
+      signUpGate,
       setNotificationtokenGate
     );
     this.animalModule = new AnimalModule(

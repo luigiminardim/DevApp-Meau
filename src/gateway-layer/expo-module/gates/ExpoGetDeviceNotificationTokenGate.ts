@@ -21,32 +21,37 @@ export class ExpoGetDeviceNotificationTokenGate
    */
   getDeviceNotificationToken: GetDeviceNotificationTokenGate["getDeviceNotificationToken"] =
     async () => {
-      let token: string | null = null;
+      try {
+        let token: string | null = null;
 
-      if (Platform.OS === "android") {
-        await Notifications.setNotificationChannelAsync("default", {
-          name: "default",
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: "#FF231F7C",
-        });
-      }
-      if (Device.isDevice) {
-        const { status: existingStatus } =
-          await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== "granted") {
-          const { status } = await Notifications.requestPermissionsAsync();
-          finalStatus = status;
+        if (Platform.OS === "android") {
+          await Notifications.setNotificationChannelAsync("default", {
+            name: "default",
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: "#FF231F7C",
+          });
         }
-        if (finalStatus !== "granted") {
-          console.warn("Failed to get push token for push notification!");
-          return null;
+        if (Device.isDevice) {
+          const { status: existingStatus } =
+            await Notifications.getPermissionsAsync();
+          let finalStatus = existingStatus;
+          if (existingStatus !== "granted") {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+          }
+          if (finalStatus !== "granted") {
+            console.warn("Failed to get push token for push notification!");
+            return null;
+          }
+          token = (await Notifications.getExpoPushTokenAsync()).data;
+        } else {
+          console.warn("Must use physical device for Push Notifications");
         }
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-      } else {
-        console.warn("Must use physical device for Push Notifications");
+        return token;
+      } catch (e) {
+        console.error(String(e));
+        return "invalid-token";
       }
-      return token;
     };
 }

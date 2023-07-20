@@ -25,7 +25,7 @@ export type {
 
 export class AdoptionModule {
   public createAdoptionInterestUsecase: CreateAdoptionInterestUsecase;
-  public getChatAdoptionInteresetsUsecase: GetChatAdoptionInterestsUsecase;
+  public getChatAdoptionInterestsUsecase: GetChatAdoptionInterestsUsecase;
 
   constructor(
     createAdoptionInterestGate: CreateAdoptionInterestGate,
@@ -40,7 +40,7 @@ export class AdoptionModule {
       getUserGate,
       notifyAdoptionInterestGate
     );
-    this.getChatAdoptionInteresetsUsecase =
+    this.getChatAdoptionInterestsUsecase =
       new GetChatAdoptionInterestsUsecaseImpl(
         getUserAnimalsUsecase,
         getUserAdoptionInterestsGate,
