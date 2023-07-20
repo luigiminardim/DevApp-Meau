@@ -47,7 +47,7 @@ export class CoreLayer {
       getSingleAnimalUsecase,
       getAnimalsAdoptionUsecase,
       getUserAnimalsUsecase,
-      removeAnimalUsecase,
+      removeAnimalUsecase
     );
     this.adoptionModule = new AdoptionModule(
       createAdoptionInterestGate,
