@@ -10,6 +10,8 @@ const {
     registerAnimalGate,
     getAnimalsAdoptionGate,
     getSingleAnimalGate,
+    getUserAnimalsGate,
+    removeAnimalGate,
   },
   adoptionModule: {
     createAdoptionInterestGate,
@@ -22,7 +24,9 @@ const coreLayer = new CoreLayer(
   loginGate,
   registerAnimalGate,
   getSingleAnimalGate,
+  getUserAnimalsGate,
   getAnimalsAdoptionGate,
+  removeAnimalGate,
   createAdoptionInterestGate,
   getUserGate,
   notifyUserGate,

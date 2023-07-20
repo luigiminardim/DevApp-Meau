@@ -1,5 +1,7 @@
 import { GetAnimalsAdoptionUsecase } from "./use-cases/GetAnimalsAdoptionUsecase";
 import { GetSingleAnimalUsecase } from "./use-cases/GetSingleAnimalUsecase";
+import { GetUserAnimalsUsecase } from "./use-cases/GetUserAnimalsUsecase";
+import { RemoveAnimalUseCase } from "./use-cases/RemoveAnimalUsecase";
 import {
   RegisterAnimalUsecase,
   RegisterAnimalParam,
@@ -12,12 +14,16 @@ export type {
   RegisterAnimalParam,
   GetSingleAnimalUsecase,
   GetAnimalsAdoptionUsecase,
+  GetUserAnimalsUsecase,
+  RemoveAnimalUseCase,
 };
 
 export class AnimalModule {
   constructor(
     public registerAnimalUsecase: RegisterAnimalUsecase,
     public getSingleAnimalUsecase: GetSingleAnimalUsecase,
-    public getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase
+    public getAnimalsAdoptionUsecase: GetAnimalsAdoptionUsecase,
+    public getUserAnimalsUsecase: GetUserAnimalsUsecase,
+    public removeAnimalUsecase: RemoveAnimalUseCase
   ) {}
 }
